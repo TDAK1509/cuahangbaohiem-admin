@@ -5,8 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test": "vue-cli-service test:unit",
+    "e2e": "vue-cli-service test:e2e",
+    "e2e:headless": "vue-cli-service test:e2e --headless",
+    "e2e:onetime": "firebase emulators:exec 'yarn e2e:headless'",
+    "backend": "firebase emulators:start --only firestore",
     "lint": "vue-cli-service lint",
     "deploy": "yarn lint && yarn build && yarn copy:netlify-redirect && yarn deploy:netlify",
     "copy:netlify-redirect": "cp _redirects dist/_redirects",
