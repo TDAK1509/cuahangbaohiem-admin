@@ -28,3 +28,8 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Firebase
+.firebase
+firestore-debug.log
+ui-debug.log
