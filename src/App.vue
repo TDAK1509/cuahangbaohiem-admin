@@ -1,57 +1,52 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-navigation-drawer v-model="drawer" app clipped :permanent="!isMobile">
+      <SideBar />
+    </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+    <v-app-bar app clipped-left color="black" dark>
+      <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <router-link data-cy="logo" class="app__title" to="/">
+        <img class="app__logo" src="@/assets/logo.png" />
+      </router-link>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+<script>
+import SideBar from "@/components/SideBar.vue";
+import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 
-export default Vue.extend({
+export default {
   name: "App",
 
   components: {
-    HelloWorld
+    SideBar
   },
 
-  data: () => ({
-    //
-  })
-});
+  data: () => ({ drawer: null }),
+
+  computed: {
+    isMobile() {
+      return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+  }
+};
 </script>
+
+<style lang="scss" scoped>
+.app__title {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-left: 1rem;
+}
+.app__logo {
+  height: 70%;
+}
+</style>
