@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app :permanent="!isMobile">
+    <v-navigation-drawer v-model="drawer" app clipped :permanent="!isMobile">
       <SideBar />
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
 
       <v-toolbar-title>Application</v-toolbar-title>
