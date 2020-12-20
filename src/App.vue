@@ -7,7 +7,9 @@
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <router-link class="app__title" to="/">
+        <img class="app__logo" src="@/assets/logo.png" />
+      </router-link>
     </v-app-bar>
 
     <v-main>
@@ -36,3 +38,15 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.app__title {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-left: 1rem;
+}
+.app__logo {
+  height: 70%;
+}
+</style>
