@@ -7,7 +7,7 @@
     <v-app-bar app clipped-left color="black" dark>
       <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
 
-      <router-link class="app__title" to="/">
+      <router-link data-cy="logo" class="app__title" to="/">
         <img class="app__logo" src="@/assets/logo.png" />
       </router-link>
     </v-app-bar>

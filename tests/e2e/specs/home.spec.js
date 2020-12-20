@@ -3,6 +3,20 @@ describe("Home page", () => {
     cy.visit("/");
   });
 
+  describe("Header bar", () => {
+    it("renders logo", () => {
+      cy.get("[data-cy=logo]").should("be.visible");
+    });
+
+    it("clicking logo goes to home page", () => {
+      const homePageUrl = Cypress.config().baseUrl + "/";
+      cy.visit("/blabla");
+      cy.url().should("not.eq", homePageUrl);
+      cy.get("[data-cy=logo]").click();
+      cy.url().should("eq", homePageUrl);
+    });
+  });
+
   it("renders text 'Khách hàng đăng ký mua bảo hiểm'", () => {
     cy.contains("Khách hàng đăng ký mua bảo hiểm").should("be.visible");
   });
