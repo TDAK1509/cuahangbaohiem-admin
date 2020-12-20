@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app permanent>
+    <v-navigation-drawer v-model="drawer" app :permanent="!isMobile">
       <SideBar />
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
 
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
@@ -18,6 +18,7 @@
 
 <script>
 import SideBar from "@/components/SideBar.vue";
+import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 
 export default {
   name: "App",
@@ -26,6 +27,12 @@ export default {
     SideBar
   },
 
-  data: () => ({ drawer: null })
+  data: () => ({ drawer: null }),
+
+  computed: {
+    isMobile() {
+      return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+  }
 };
 </script>
