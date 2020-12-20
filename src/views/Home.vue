@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    Home
+    Khách hàng đăng ký mua bảo hiểm
   </div>
 </template>
 
