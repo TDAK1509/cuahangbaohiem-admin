@@ -9,6 +9,11 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "*",
+    name: "Not Found",
+    component: () => import("../views/NotFound.vue")
   }
 ];
 
