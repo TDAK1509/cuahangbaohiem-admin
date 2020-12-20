@@ -1,7 +1,7 @@
 <template>
-  <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <!--  -->
+  <v-app>
+    <v-navigation-drawer v-model="drawer" app permanent>
+      <SideBar />
     </v-navigation-drawer>
 
     <v-app-bar app>
@@ -17,8 +17,15 @@
 </template>
 
 <script>
+import SideBar from "@/components/SideBar.vue";
+
 export default {
   name: "App",
+
+  components: {
+    SideBar
+  },
+
   data: () => ({ drawer: null })
 };
 </script>
