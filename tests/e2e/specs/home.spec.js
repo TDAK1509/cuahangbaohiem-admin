@@ -17,8 +17,8 @@ describe("Home page", () => {
     });
   });
 
-  it("renders text 'Khách hàng đăng ký mua bảo hiểm'", () => {
-    cy.contains("Khách hàng đăng ký mua bảo hiểm").should("be.visible");
+  it("renders text 'Xem khách hàng đăng ký mua bảo hiểm'", () => {
+    cy.contains("Xem khách hàng đăng ký mua bảo hiểm").should("be.visible");
   });
 
   describe("Side bar", () => {

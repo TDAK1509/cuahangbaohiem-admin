@@ -1,47 +1,89 @@
 <template>
-  <div class="home">
-    Khách hàng đăng ký mua bảo hiểm
-    <router-link data-cy="car-insurance-request" to="/bao-hiem/o-to"
-      >Bảo hiểm ô tô</router-link
-    >
+  <v-container class="home">
+    <v-row>
+      <v-col>
+        <h2>Xem khách hàng đăng ký mua bảo hiểm</h2>
+      </v-col>
+    </v-row>
 
-    <router-link data-cy="accident-insurance-request" to="/bao-hiem/tai-nan"
-      >Bảo hiểm tai nạn</router-link
-    >
-
-    <router-link
-      data-cy="health-insurance-request"
-      to="/bao-hiem/suc-khoe-ca-nhan"
-      >Bảo hiểm sức khỏe cá nhân</router-link
-    >
-
-    <router-link data-cy="cancer-insurance-request" to="/bao-hiem/ung-thu"
-      >Bảo hiểm ung thư</router-link
-    >
-
-    <router-link data-cy="house-insurance-request" to="/bao-hiem/nha-tu-nhan"
-      >Bảo hiểm nhà tư nnân</router-link
-    >
-
-    <router-link data-cy="motorbike-insurance-request" to="/bao-hiem/xe-may"
-      >Bảo hiểm xe máy</router-link
-    >
-
-    <router-link
-      data-cy="travel-insurance-request"
-      to="/bao-hiem/du-lich-quoc-te"
-      >Bảo hiểm du lịch quốc tế</router-link
-    >
-
-    <router-link data-cy="life-insurance-request" to="/bao-hiem/nhan-tho"
-      >Bảo hiểm nhân thọ</router-link
-    >
-  </div>
+    <v-row>
+      <v-col v-for="(nav, index) in navs" :key="index">
+        <v-tooltip bottom color="black">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              :color="getButtonBackgroundColor(index)"
+              class="ma-2"
+              :class="getButtonTextColor(index) + '--text'"
+              x-large
+              fab
+              :data-cy="nav.dataCy"
+              :to="nav.to"
+            >
+              <v-icon dark>{{ nav.icon }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ nav.text }}</span>
+        </v-tooltip>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import InsuranceNavs, { Nav } from "@/utils/insurance-navs";
+
+const insuranceNavsInstance = new InsuranceNavs();
+
+enum BUTTON_POSITION {
+  CAR,
+  ACCIDENT,
+  HEALTH,
+  CANCER,
+  HOUSE,
+  MOTORBIKE,
+  TRAVEL,
+  LIFE
+}
 
 @Component
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  navs: Nav[] = insuranceNavsInstance.navs;
+
+  getButtonBackgroundColor(buttonIndex: number): string {
+    switch (buttonIndex) {
+      case BUTTON_POSITION.CAR:
+        return "indigo";
+      case BUTTON_POSITION.ACCIDENT:
+        return "red";
+      case BUTTON_POSITION.HEALTH:
+        return "grey lighten-1";
+      case BUTTON_POSITION.CANCER:
+        return "warning";
+      case BUTTON_POSITION.HOUSE:
+        return "success";
+      case BUTTON_POSITION.MOTORBIKE:
+        return "brown darken-1";
+      case BUTTON_POSITION.TRAVEL:
+        return "info";
+      case BUTTON_POSITION.LIFE:
+        return "black";
+      default:
+        return "";
+    }
+  }
+
+  getButtonTextColor(buttonIndex: number): string {
+    switch (buttonIndex) {
+      case BUTTON_POSITION.HEALTH:
+        return "black";
+      case BUTTON_POSITION.LIFE:
+        return "yellow";
+      default:
+        return "white";
+    }
+  }
+}
 </script>
