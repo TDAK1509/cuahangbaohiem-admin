@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit --passWithNoTests",
     "e2e": "cypress open --browser chrome",
     "e2e:headless": "cypress run",
     "e2e:onetime": "firebase emulators:exec 'yarn e2e:headless'",
