@@ -8,17 +8,24 @@
 
     <v-row>
       <v-col v-for="(nav, index) in navs" :key="index">
-        <v-btn
-          :color="getButtonBackgroundColor(index)"
-          class="ma-2"
-          :class="getButtonTextColor(index) + '--text'"
-          x-large
-          fab
-          :data-cy="nav.dataCy"
-          :to="nav.to"
-        >
-          <v-icon dark>{{ nav.icon }}</v-icon>
-        </v-btn>
+        <v-tooltip bottom color="black">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              :color="getButtonBackgroundColor(index)"
+              class="ma-2"
+              :class="getButtonTextColor(index) + '--text'"
+              x-large
+              fab
+              :data-cy="nav.dataCy"
+              :to="nav.to"
+            >
+              <v-icon dark>{{ nav.icon }}</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ nav.text }}</span>
+        </v-tooltip>
       </v-col>
     </v-row>
   </v-container>
