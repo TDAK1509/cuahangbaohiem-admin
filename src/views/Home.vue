@@ -2,7 +2,7 @@
   <v-container class="home">
     <v-row>
       <v-col>
-        <h2>Khách hàng đăng ký mua bảo hiểm</h2>
+        <h2>Xem khách hàng đăng ký mua bảo hiểm</h2>
       </v-col>
     </v-row>
 
