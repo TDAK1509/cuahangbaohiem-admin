@@ -20,8 +20,9 @@ export default class CarInsurance {
     return requests;
   }
 
-  private fetchFromServer(): RawCarInsuranceRequest[] {
-    return CarInsuranceModel.fetch();
+  private async fetchFromServer(): Promise<RawCarInsuranceRequest[]> {
+    const rawRequests = await CarInsuranceModel.fetch();
+    return rawRequests;
   }
 
   private cookRawRequests(

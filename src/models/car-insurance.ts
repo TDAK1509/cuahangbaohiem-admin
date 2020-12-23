@@ -15,22 +15,16 @@ export interface RawCarInsuranceRequest {
 }
 
 export default class CarInsuranceModel {
-  public static fetch(): RawCarInsuranceRequest[] {
-    // db.get()
-    return [
-      {
-        date: "Wed Dec 23 2020 06:43:56 GMT+0700 (Indochina Time)",
-        name: "Michael Jackson",
-        email: "test@gmail.com",
-        phone: "1234567",
-        insuranceCompany: "PVI",
-        insuranceValue: "12.320.000 ₫",
-        note: ""
-      }
-    ];
-    // querySnapshot.forEach(function(doc) {
-    //     // doc.data() is never undefined for query doc snapshots
-    //     console.log(doc.id, " => ", doc.data());
-    // });
+  public static async fetch(): Promise<RawCarInsuranceRequest[]> {
+    const rawRequests: RawCarInsuranceRequest[] = [];
+
+    const querySnapshot = await db.get();
+
+    querySnapshot.forEach(function(doc) {
+      const rawRequest = doc.data() as RawCarInsuranceRequest;
+      rawRequests.push(rawRequest);
+    });
+
+    return rawRequests;
   }
 }
