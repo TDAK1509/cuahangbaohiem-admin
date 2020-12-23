@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, index) in tableBody" :key="`row${index}`">
+          <tr v-for="(row, index) in carInsuranceRequests" :key="`row${index}`">
             <td v-for="(cell, cellIndex) in row" :key="`cell${cellIndex}`">
               {{ cell }}
             </td>
@@ -27,6 +27,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import CarInsuranceController, {
+  CarInsuranceRequest
+} from "@/controller/car-insurance";
+
+const controller = new CarInsuranceController();
 
 @Component
 export default class CarInsurance extends Vue {
@@ -40,16 +45,11 @@ export default class CarInsurance extends Vue {
     "Ghi chú"
   ];
 
-  tableBody = [
-    {
-      date: "2020-12-23 06:43:56",
-      name: "Michael Jackson",
-      email: "test@gmail.com",
-      phone: "1234567",
-      insuranceCompany: "PVI",
-      insuranceValue: "12.320.000 ₫",
-      note: ""
-    }
-  ];
+  carInsuranceRequests: CarInsuranceRequest[] = [];
+
+  async mounted() {
+    this.carInsuranceRequests = controller.requests;
+    await Vue.nextTick();
+  }
 }
 </script>
