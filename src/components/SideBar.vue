@@ -25,6 +25,6 @@ const insuranceNavsInstance = new InsuranceNavs();
 @Component
 export default class SideBar extends Vue {
   selectedNav = 0;
-  navs = insuranceNavsInstance.navs;
+  navs: Nav[] = insuranceNavsInstance.navs;
 }
 </script>
