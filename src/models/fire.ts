@@ -2,10 +2,10 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 export default class FireBase {
-  private _db!: firebase.firestore.Firestore;
+  private _firestore!: firebase.firestore.Firestore;
 
-  get db(): firebase.firestore.Firestore {
-    return this._db;
+  get firestore(): firebase.firestore.Firestore {
+    return this._firestore;
   }
 
   constructor() {
@@ -35,11 +35,11 @@ export default class FireBase {
   }
 
   private initFirestore() {
-    this._db = firebase.firestore();
+    this._firestore = firebase.firestore();
 
     if (process.env.NODE_ENV === "development") {
       try {
-        this._db.settings({
+        this._firestore.settings({
           host: "localhost:8081",
           experimentalForceLongPolling: true,
           ssl: false
