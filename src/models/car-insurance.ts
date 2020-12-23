@@ -13,7 +13,7 @@ export default class CarInsuranceModel {
     return [
       {
         date: "Wed Dec 23 2020 06:43:56 GMT+0700 (Indochina Time)",
-        name: "Michael Jackson",
+        name: "Michael Jacksonnn",
         email: "test@gmail.com",
         phone: "1234567",
         insuranceCompany: "PVI",
