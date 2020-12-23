@@ -14,19 +14,10 @@ export interface CarInsuranceRequest {
 }
 
 export default class CarInsurance {
-  private _requests: CarInsuranceRequest[] = [];
-
-  constructor() {
-    this.fetchAndCookRequests();
-  }
-
-  get requests(): CarInsuranceRequest[] {
-    return this._requests;
-  }
-
-  private async fetchAndCookRequests() {
+  public async fetchRequests(): Promise<CarInsuranceRequest[]> {
     const rawRequests = await this.fetchFromServer();
-    this._requests = this.cookRawRequests(rawRequests);
+    const requests = this.cookRawRequests(rawRequests);
+    return requests;
   }
 
   private fetchFromServer(): RawCarInsuranceRequest[] {

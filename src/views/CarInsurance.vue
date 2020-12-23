@@ -48,7 +48,7 @@ export default class CarInsurance extends Vue {
   carInsuranceRequests: CarInsuranceRequest[] = [];
 
   async mounted() {
-    this.carInsuranceRequests = controller.requests;
+    this.carInsuranceRequests = await controller.fetchRequests();
     await Vue.nextTick();
   }
 }

@@ -8,10 +8,9 @@ let controller;
 describe("CarInsuranceController", () => {
   beforeAll(() => {
     mockCarInsuranceModelFetchMethod();
-    controller = new CarInsurance();
   });
 
-  it("controller.requests returns expected data", () => {
+  it("controller.fetchRequests() returns expected data", async () => {
     const expectedData = [
       {
         date: "2020-12-23 06:43:56",
@@ -23,7 +22,9 @@ describe("CarInsuranceController", () => {
         note: ""
       }
     ];
-    expect(controller.requests).toEqual(expectedData);
+    controller = new CarInsurance();
+    const carInsuranceRequests = await controller.fetchRequests();
+    expect(carInsuranceRequests).toEqual(expectedData);
   });
 });
 
