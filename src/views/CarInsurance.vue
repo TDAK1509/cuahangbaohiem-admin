@@ -1,9 +1,14 @@
 <template>
   <v-container>
-    <v-tabs>
+    <v-tabs v-model="tab">
       <v-tab data-cy="request-tab">Chưa tư vấn</v-tab>
       <v-tab data-cy="request-tab">Đã tư vấn</v-tab>
     </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item data-cy="pending-requests">Pending requests</v-tab-item>
+      <v-tab-item data-cy="done-requests">Done request</v-tab-item>
+    </v-tabs-items>
 
     <v-simple-table dark>
       <template v-slot:default>
@@ -40,6 +45,8 @@ const controller = new CarInsuranceController();
 
 @Component
 export default class CarInsurance extends Vue {
+  tab = 0;
+
   tableHeadings: string[] = [
     "Ngày",
     "Tên",

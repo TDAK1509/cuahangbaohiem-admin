@@ -14,12 +14,30 @@ describe("bao-hiem/o-to page", () => {
         .should("have.text", "Đã tư vấn");
     });
 
+    it("clicks 'Đã tư vấn' shows done requests", () => {
+      getTabs()
+        .last()
+        .click();
+      cy.get("[data-cy=done-requests]").should("be.visible");
+    });
+
+    it("clicks 'Chưa tư vấn' pending requests", () => {
+      getTabs()
+        .last()
+        .click();
+
+      getTabs()
+        .first()
+        .click();
+      cy.get("[data-cy=pending-requests]").should("be.visible");
+    });
+
     function getTabs() {
       return cy.get("[data-cy=request-tab]");
     }
   });
 
-  describe("tab 'Chưa tư vấn'", () => {
+  describe("pending requests content", () => {
     it("renders table with correct headings", () => {
       cy.contains("Ngày").should("be.visible");
       cy.contains("Tên").should("be.visible");
