@@ -18,6 +18,7 @@ describe("bao-hiem/o-to page", () => {
       getTabs()
         .last()
         .click();
+      cy.get("[data-cy=pending-requests]").should("not.be.visible");
       cy.get("[data-cy=done-requests]").should("be.visible");
     });
 
@@ -30,6 +31,7 @@ describe("bao-hiem/o-to page", () => {
         .first()
         .click();
       cy.get("[data-cy=pending-requests]").should("be.visible");
+      cy.get("[data-cy=done-requests]").should("not.be.visible");
     });
 
     function getTabs() {
