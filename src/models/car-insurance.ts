@@ -13,6 +13,7 @@ export interface RawCarInsuranceRequest {
   insuranceCompany: string;
   insuranceValue: string;
   date: string;
+  isDone: boolean;
 }
 
 export default class CarInsuranceModel {
@@ -34,5 +35,19 @@ export default class CarInsuranceModel {
 
   public static setRequestDone(requestId: string) {
     return db.doc(requestId).update({ isDone: true });
+  }
+
+  public static async fetchDoneRequests(): Promise<RawCarInsuranceRequest[]> {
+    const rawRequests: RawCarInsuranceRequest[] = [];
+
+    const querySnapshot = await db.where("isDone", "==", true).get();
+
+    querySnapshot.forEach(function(doc) {
+      const rawData = doc.data();
+      const rawRequest = { id: doc.id, ...rawData } as RawCarInsuranceRequest;
+      rawRequests.push(rawRequest);
+    });
+
+    return rawRequests;
   }
 }

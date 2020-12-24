@@ -83,7 +83,7 @@ export default class CarInsurance extends Vue {
     this.isLoading = true;
 
     try {
-      this.carInsuranceDoneRequests = await controller.fetchPendingRequests();
+      this.carInsuranceDoneRequests = await controller.fetchDoneRequests();
       await Vue.nextTick();
       this.isError = false;
     } catch (error) {

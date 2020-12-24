@@ -20,7 +20,8 @@ describe("CarInsuranceController", () => {
         phone: "1234567",
         insuranceCompany: "PVI",
         insuranceValue: "12.320.000 ₫",
-        note: ""
+        note: "",
+        isDone: false
       }
     ];
     controller = new CarInsurance();
@@ -35,6 +36,25 @@ describe("CarInsuranceController", () => {
     controller.setRequestDone("random-request-id");
     expect(mockSetDone).toBeCalledWith("random-request-id");
   });
+
+  it("controller.fetchDoneRequests() returns expected data", async () => {
+    const expectedData = [
+      {
+        id: "id",
+        date: "2020-12-23 06:43:56",
+        name: "Michael Jackson",
+        email: "test@gmail.com",
+        phone: "1234567",
+        insuranceCompany: "PVI",
+        insuranceValue: "12.320.000 ₫",
+        note: "",
+        isDone: true
+      }
+    ];
+    controller = new CarInsurance();
+    const carInsuranceRequests = await controller.fetchDoneRequests();
+    expect(carInsuranceRequests).toEqual(expectedData);
+  });
 });
 
 function mockCarInsuranceModelFetchMethod() {
@@ -48,8 +68,26 @@ function mockCarInsuranceModelFetchMethod() {
       phone: "1234567",
       insuranceCompany: "PVI",
       insuranceValue: "12.320.000 ₫",
-      note: ""
+      note: "",
+      isDone: false
     }
   ]);
+
   CarInsuranceModel.fetchPendingRequests = mockFetchPendingRequests;
+
+  const mockFetchDoneRequests = jest.fn();
+  mockFetchDoneRequests.mockReturnValue([
+    {
+      id: "id",
+      date: "Wed Dec 23 2020 06:43:56 GMT+0700 (Indochina Time)",
+      name: "Michael Jackson",
+      email: "test@gmail.com",
+      phone: "1234567",
+      insuranceCompany: "PVI",
+      insuranceValue: "12.320.000 ₫",
+      note: "",
+      isDone: true
+    }
+  ]);
+  CarInsuranceModel.fetchDoneRequests = mockFetchDoneRequests;
 }

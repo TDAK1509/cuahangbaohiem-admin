@@ -3,16 +3,7 @@ import CarInsuranceModel, {
 } from "@/models/car-insurance";
 import moment from "moment";
 
-export interface CarInsuranceRequest {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  note?: string;
-  insuranceCompany: string;
-  insuranceValue: string;
-  date: string;
-}
+export type CarInsuranceRequest = RawCarInsuranceRequest;
 
 export default class CarInsurance {
   public async fetchPendingRequests(): Promise<CarInsuranceRequest[]> {
@@ -32,20 +23,28 @@ export default class CarInsurance {
     rawRequests: RawCarInsuranceRequest[]
   ): CarInsuranceRequest[] {
     return rawRequests.map(rawRequest => {
-      return {
-        id: rawRequest.id,
-        date: moment(new Date(rawRequest.date)).format("YYYY-MM-DD hh:mm:ss"),
-        name: rawRequest.name,
-        email: rawRequest.email,
-        phone: rawRequest.phone,
-        insuranceCompany: rawRequest.insuranceCompany,
-        insuranceValue: rawRequest.insuranceValue,
-        note: rawRequest.note
-      };
+      const request = { ...rawRequest };
+      request.date = moment(new Date(rawRequest.date)).format(
+        "YYYY-MM-DD hh:mm:ss"
+      );
+      return request;
     });
   }
 
   public setRequestDone(requestId: string) {
     return CarInsuranceModel.setRequestDone(requestId);
+  }
+
+  public async fetchDoneRequests(): Promise<CarInsuranceRequest[]> {
+    const rawRequests = await this.fetchDoneRequestsFromServer();
+    const requests = this.cookRawRequests(rawRequests);
+    return requests;
+  }
+
+  private async fetchDoneRequestsFromServer(): Promise<
+    RawCarInsuranceRequest[]
+  > {
+    const rawRequests = await CarInsuranceModel.fetchDoneRequests();
+    return rawRequests;
   }
 }
