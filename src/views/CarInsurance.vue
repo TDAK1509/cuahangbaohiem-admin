@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-tabs>
+      <v-tab data-cy="request-tab">Chưa tư vấn</v-tab>
+      <v-tab data-cy="request-tab">Đã tư vấn</v-tab>
+    </v-tabs>
+
     <v-simple-table dark>
       <template v-slot:default>
         <thead>
