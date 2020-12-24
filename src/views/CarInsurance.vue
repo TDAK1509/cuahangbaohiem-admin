@@ -28,6 +28,18 @@
             <td v-for="(cell, cellIndex) in row" :key="`cell${cellIndex}`">
               {{ cell }}
             </td>
+            <td>
+              <v-btn
+                fab
+                small
+                color="success"
+                dark
+                data-cy="set-done"
+                @click="setDone"
+              >
+                <v-icon>mdi-check</v-icon>
+              </v-btn>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -62,6 +74,10 @@ export default class CarInsurance extends Vue {
   async mounted() {
     this.carInsuranceRequests = await controller.fetchRequests();
     await Vue.nextTick();
+  }
+
+  setDone() {
+    this.carInsuranceRequests.splice(0, 1);
   }
 }
 </script>

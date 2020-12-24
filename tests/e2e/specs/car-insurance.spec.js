@@ -73,5 +73,14 @@ describe("bao-hiem/o-to page", () => {
     it("renders insurance value", () => {
       cy.contains("12.320.000 ₫").should("be.visible");
     });
+
+    it("clicks SET DONE button will make the request disappear", () => {
+      cy.get("[data-cy=set-done]")
+        .should("be.visible")
+        .click();
+      cy.get("tbody")
+        .find("tr")
+        .should("have.length", 0);
+    });
   });
 });
