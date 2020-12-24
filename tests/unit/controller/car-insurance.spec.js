@@ -30,11 +30,11 @@ describe("CarInsuranceController", () => {
   });
 
   it("controller.setRequestDone calls CarInsuranceModel.setRequestDone with correct argument", () => {
-    const mockSetDone = jest.fn();
-    CarInsuranceModel.setRequestDone = mockSetDone;
+    const mock = jest.fn();
+    CarInsuranceModel.setRequestDone = mock;
     controller = new CarInsurance();
     controller.setRequestDone("random-request-id");
-    expect(mockSetDone).toBeCalledWith("random-request-id");
+    expect(mock).toBeCalledWith("random-request-id");
   });
 
   it("controller.fetchDoneRequests() returns expected data", async () => {
@@ -54,6 +54,14 @@ describe("CarInsuranceController", () => {
     controller = new CarInsurance();
     const carInsuranceRequests = await controller.fetchDoneRequests();
     expect(carInsuranceRequests).toEqual(expectedData);
+  });
+
+  it("controller.setRequestPending calls CarInsuranceModel.setRequestPending with correct argument", () => {
+    const mock = jest.fn();
+    CarInsuranceModel.setRequestPending = mock;
+    controller = new CarInsurance();
+    controller.setRequestPending("random-request-id");
+    expect(mock).toBeCalledWith("random-request-id");
   });
 });
 

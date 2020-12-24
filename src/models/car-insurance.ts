@@ -33,10 +33,6 @@ export default class CarInsuranceModel {
     return rawRequests;
   }
 
-  public static setRequestDone(requestId: string) {
-    return db.doc(requestId).update({ isDone: true });
-  }
-
   public static async fetchDoneRequests(): Promise<RawCarInsuranceRequest[]> {
     const rawRequests: RawCarInsuranceRequest[] = [];
 
@@ -49,5 +45,13 @@ export default class CarInsuranceModel {
     });
 
     return rawRequests;
+  }
+
+  public static setRequestDone(requestId: string) {
+    return db.doc(requestId).update({ isDone: true });
+  }
+
+  public static setRequestPending(requestId: string) {
+    return db.doc(requestId).update({ isDone: false });
   }
 }

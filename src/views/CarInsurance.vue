@@ -17,6 +17,7 @@
       </v-tab-item>
       <v-tab-item data-cy="done-requests">
         <CarInsuranceRequestTable
+          v-if="carInsuranceDoneRequests !== null"
           :is-loading="isLoading"
           :is-error="isError"
           :requests="carInsuranceDoneRequests"
@@ -47,21 +48,15 @@ enum TAB {
 })
 export default class CarInsurance extends Vue {
   carInsurancePendingRequests: CarInsuranceRequest[] = [];
-  carInsuranceDoneRequests: CarInsuranceRequest[] = [];
+  carInsuranceDoneRequests: CarInsuranceRequest[] | null = null;
   tab = 0;
   isLoading = true;
   isError = true;
 
   @Watch("tab")
   onChangeTab(selectedTab: number) {
-    if (selectedTab === TAB.PENDING) {
-      this.fetchPendingRequests();
-      return;
-    }
-
-    if (selectedTab === TAB.DONE) {
-      this.fetchDoneRequests();
-      return;
+    if (selectedTab === TAB.DONE && this.carInsuranceDoneRequests === null) {
+      return this.fetchDoneRequests();
     }
   }
 
@@ -107,8 +102,18 @@ export default class CarInsurance extends Vue {
     });
   }
 
-  setPending() {
-    this.carInsuranceDoneRequests.splice(0, 1);
+  setPending(requestId: string) {
+    if (this.carInsuranceDoneRequests === null) {
+      return;
+    }
+
+    const targetRequest = this.carInsuranceDoneRequests.findIndex(
+      request => request.id === requestId
+    );
+    this.carInsuranceDoneRequests.splice(targetRequest, 1);
+    controller.setRequestPending(requestId).catch(() => {
+      this.isError = true;
+    });
   }
 }
 </script>

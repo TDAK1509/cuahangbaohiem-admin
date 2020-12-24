@@ -31,10 +31,6 @@ export default class CarInsurance {
     });
   }
 
-  public setRequestDone(requestId: string) {
-    return CarInsuranceModel.setRequestDone(requestId);
-  }
-
   public async fetchDoneRequests(): Promise<CarInsuranceRequest[]> {
     const rawRequests = await this.fetchDoneRequestsFromServer();
     const requests = this.cookRawRequests(rawRequests);
@@ -46,5 +42,13 @@ export default class CarInsurance {
   > {
     const rawRequests = await CarInsuranceModel.fetchDoneRequests();
     return rawRequests;
+  }
+
+  public setRequestDone(requestId: string) {
+    return CarInsuranceModel.setRequestDone(requestId);
+  }
+
+  public setRequestPending(requestId: string) {
+    return CarInsuranceModel.setRequestPending(requestId);
   }
 }

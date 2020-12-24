@@ -57,7 +57,7 @@
               color="warning"
               dark
               data-cy="set-pending"
-              @click="setPending"
+              @click="setPending(request.id)"
             >
               <v-icon>mdi-undo</v-icon>
             </v-btn>
@@ -106,8 +106,8 @@ export default class CarInsuranceRequestTable extends Vue {
   }
 
   @Emit("set-pending")
-  setPending() {
-    //
+  setPending(requestId: string) {
+    return requestId;
   }
 }
 </script>

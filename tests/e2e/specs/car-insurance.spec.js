@@ -190,9 +190,14 @@ describe("bao-hiem/o-to page", () => {
         .should("be.visible")
         .click();
       getDoneRequestsTable()
-        .find("tbody")
-        .find("tr")
-        .should("have.length", 0);
+        .find("[data-cy=empty]")
+        .should("be.visible");
+    });
+
+    it("re visit page to check if request is set PENDING in server", () => {
+      getDoneRequestsTable()
+        .find("[data-cy=empty]")
+        .should("be.visible");
     });
   });
 });
