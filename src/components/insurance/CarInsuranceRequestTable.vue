@@ -13,10 +13,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in requests" :key="`row${index}`">
-          <td v-for="(cell, cellIndex) in row" :key="`cell${cellIndex}`">
-            {{ cell }}
-          </td>
+        <tr v-if="isLoading">
+          <td :colspan="tableHeadings.length">Loading</td>
+        </tr>
+
+        <tr v-else-if="isError">
+          <td :colspan="tableHeadings.length">Error</td>
+        </tr>
+
+        <tr v-else-if="!hasRequest" data-cy="empty">
+          <td :colspan="tableHeadings.length">Empty</td>
+        </tr>
+
+        <tr
+          v-else
+          v-for="(request, index) in requests"
+          :key="`request${index}`"
+        >
+          <td>{{ request.date }}</td>
+          <td>{{ request.name }}</td>
+          <td>{{ request.email }}</td>
+          <td>{{ request.phone }}</td>
+          <td>{{ request.insuranceCompany }}</td>
+          <td>{{ request.insuranceValue }}</td>
+          <td>{{ request.note }}</td>
           <td>
             <v-btn
               v-if="isPending"
@@ -25,7 +45,7 @@
               color="success"
               dark
               data-cy="set-done"
-              @click="setDone"
+              @click="setDone(request.id)"
             >
               <v-icon>mdi-check</v-icon>
             </v-btn>
@@ -60,6 +80,12 @@ export default class CarInsuranceRequestTable extends Vue {
   @Prop({ type: Boolean, default: false })
   isPending!: boolean;
 
+  @Prop({ type: Boolean, default: true })
+  isLoading!: boolean;
+
+  @Prop({ type: Boolean, default: true })
+  isError!: boolean;
+
   tableHeadings: string[] = [
     "Ngày",
     "Tên",
@@ -70,9 +96,13 @@ export default class CarInsuranceRequestTable extends Vue {
     "Ghi chú"
   ];
 
+  get hasRequest(): boolean {
+    return this.requests.length > 0;
+  }
+
   @Emit("set-done")
-  setDone() {
-    //
+  setDone(requestId: string) {
+    return requestId;
   }
 
   @Emit("set-pending")

@@ -10,9 +10,10 @@ describe("CarInsuranceController", () => {
     mockCarInsuranceModelFetchMethod();
   });
 
-  it("controller.fetchRequests() returns expected data", async () => {
+  it("controller.fetchPendingRequests() returns expected data", async () => {
     const expectedData = [
       {
+        id: "id",
         date: "2020-12-23 06:43:56",
         name: "Michael Jackson",
         email: "test@gmail.com",
@@ -23,15 +24,24 @@ describe("CarInsuranceController", () => {
       }
     ];
     controller = new CarInsurance();
-    const carInsuranceRequests = await controller.fetchRequests();
+    const carInsuranceRequests = await controller.fetchPendingRequests();
     expect(carInsuranceRequests).toEqual(expectedData);
+  });
+
+  it("controller.setRequestDone calls CarInsuranceModel.setRequestDone with correct argument", () => {
+    const mockSetDone = jest.fn();
+    CarInsuranceModel.setRequestDone = mockSetDone;
+    controller = new CarInsurance();
+    controller.setRequestDone("random-request-id");
+    expect(mockSetDone).toBeCalledWith("random-request-id");
   });
 });
 
 function mockCarInsuranceModelFetchMethod() {
-  const mockFetch = jest.fn();
-  mockFetch.mockReturnValue([
+  const mockFetchPendingRequests = jest.fn();
+  mockFetchPendingRequests.mockReturnValue([
     {
+      id: "id",
       date: "Wed Dec 23 2020 06:43:56 GMT+0700 (Indochina Time)",
       name: "Michael Jackson",
       email: "test@gmail.com",
@@ -41,5 +51,5 @@ function mockCarInsuranceModelFetchMethod() {
       note: ""
     }
   ]);
-  CarInsuranceModel.fetch = mockFetch;
+  CarInsuranceModel.fetchPendingRequests = mockFetchPendingRequests;
 }

@@ -8,6 +8,8 @@
     <v-tabs-items v-model="tab">
       <v-tab-item data-cy="pending-requests">
         <CarInsuranceRequestTable
+          :is-loading="isLoading"
+          :is-error="isError"
           :requests="carInsurancePendingRequests"
           is-pending
           @set-done="setDone"
@@ -15,6 +17,8 @@
       </v-tab-item>
       <v-tab-item data-cy="done-requests">
         <CarInsuranceRequestTable
+          :is-loading="isLoading"
+          :is-error="isError"
           :requests="carInsuranceDoneRequests"
           @set-pending="setPending"
         />
@@ -45,6 +49,8 @@ export default class CarInsurance extends Vue {
   carInsurancePendingRequests: CarInsuranceRequest[] = [];
   carInsuranceDoneRequests: CarInsuranceRequest[] = [];
   tab = 0;
+  isLoading = true;
+  isError = true;
 
   @Watch("tab")
   onChangeTab(selectedTab: number) {
@@ -60,21 +66,45 @@ export default class CarInsurance extends Vue {
   }
 
   async fetchPendingRequests() {
-    this.carInsurancePendingRequests = await controller.fetchRequests();
-    await Vue.nextTick();
+    this.isLoading = true;
+
+    try {
+      this.carInsurancePendingRequests = await controller.fetchPendingRequests();
+      await Vue.nextTick();
+      this.isError = false;
+    } catch (error) {
+      this.isError = true;
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   async fetchDoneRequests() {
-    this.carInsuranceDoneRequests = await controller.fetchRequests();
-    await Vue.nextTick();
+    this.isLoading = true;
+
+    try {
+      this.carInsuranceDoneRequests = await controller.fetchPendingRequests();
+      await Vue.nextTick();
+      this.isError = false;
+    } catch (error) {
+      this.isError = true;
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   async mounted() {
     await this.fetchPendingRequests();
   }
 
-  setDone() {
-    this.carInsurancePendingRequests.splice(0, 1);
+  setDone(requestId: string) {
+    const targetRequest = this.carInsurancePendingRequests.findIndex(
+      request => request.id === requestId
+    );
+    this.carInsurancePendingRequests.splice(targetRequest, 1);
+    controller.setRequestDone(requestId).catch(() => {
+      this.isError = true;
+    });
   }
 
   setPending() {

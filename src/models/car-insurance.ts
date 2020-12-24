@@ -5,6 +5,7 @@ const firestore = firebase.firestore;
 const db = firestore.collection("car_insurance_request");
 
 export interface RawCarInsuranceRequest {
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -15,16 +16,23 @@ export interface RawCarInsuranceRequest {
 }
 
 export default class CarInsuranceModel {
-  public static async fetch(): Promise<RawCarInsuranceRequest[]> {
+  public static async fetchPendingRequests(): Promise<
+    RawCarInsuranceRequest[]
+  > {
     const rawRequests: RawCarInsuranceRequest[] = [];
 
-    const querySnapshot = await db.get();
+    const querySnapshot = await db.where("isDone", "==", false).get();
 
     querySnapshot.forEach(function(doc) {
-      const rawRequest = doc.data() as RawCarInsuranceRequest;
+      const rawData = doc.data();
+      const rawRequest = { id: doc.id, ...rawData } as RawCarInsuranceRequest;
       rawRequests.push(rawRequest);
     });
 
     return rawRequests;
+  }
+
+  public static setRequestDone(requestId: string) {
+    return db.doc(requestId).update({ isDone: true });
   }
 }
