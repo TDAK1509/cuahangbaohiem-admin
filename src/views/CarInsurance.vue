@@ -13,6 +13,7 @@
           :requests="carInsurancePendingRequests"
           is-pending
           @set-done="setDone"
+          @delete="deletePendingRequest"
         />
       </v-tab-item>
       <v-tab-item data-cy="done-requests">
@@ -22,6 +23,7 @@
           :is-error="isError"
           :requests="carInsuranceDoneRequests"
           @set-pending="setPending"
+          @delete="deleteDoneRequest"
         />
       </v-tab-item>
     </v-tabs-items>
@@ -112,6 +114,30 @@ export default class CarInsurance extends Vue {
     );
     this.carInsuranceDoneRequests.splice(targetRequest, 1);
     controller.setRequestPending(requestId).catch(() => {
+      this.isError = true;
+    });
+  }
+
+  deletePendingRequest(requestId: string) {
+    const targetRequest = this.carInsurancePendingRequests.findIndex(
+      request => request.id === requestId
+    );
+    this.carInsurancePendingRequests.splice(targetRequest, 1);
+    controller.deleteRequest(requestId).catch(() => {
+      this.isError = true;
+    });
+  }
+
+  deleteDoneRequest(requestId: string) {
+    if (this.carInsuranceDoneRequests === null) {
+      return;
+    }
+
+    const targetRequest = this.carInsuranceDoneRequests.findIndex(
+      request => request.id === requestId
+    );
+    this.carInsuranceDoneRequests.splice(targetRequest, 1);
+    controller.deleteRequest(requestId).catch(() => {
       this.isError = true;
     });
   }

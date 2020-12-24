@@ -61,6 +61,17 @@
             >
               <v-icon>mdi-undo</v-icon>
             </v-btn>
+
+            <v-btn
+              fab
+              small
+              color="danger"
+              dark
+              data-cy="delete-button"
+              @click="deleteRequest(request.id)"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </td>
         </tr>
       </tbody>
@@ -107,6 +118,11 @@ export default class CarInsuranceRequestTable extends Vue {
 
   @Emit("set-pending")
   setPending(requestId: string) {
+    return requestId;
+  }
+
+  @Emit("delete")
+  deleteRequest(requestId: string) {
     return requestId;
   }
 }

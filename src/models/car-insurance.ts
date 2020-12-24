@@ -54,4 +54,8 @@ export default class CarInsuranceModel {
   public static setRequestPending(requestId: string) {
     return db.doc(requestId).update({ isDone: false });
   }
+
+  public static deleteRequest(requestId: string) {
+    return db.doc(requestId).delete();
+  }
 }

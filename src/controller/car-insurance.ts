@@ -51,4 +51,8 @@ export default class CarInsurance {
   public setRequestPending(requestId: string) {
     return CarInsuranceModel.setRequestPending(requestId);
   }
+
+  public deleteRequest(requestId: string) {
+    return CarInsuranceModel.deleteRequest(requestId);
+  }
 }

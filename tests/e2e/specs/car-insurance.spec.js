@@ -101,15 +101,11 @@ describe("bao-hiem/o-to page", () => {
         .find("[data-cy=set-done]")
         .should("be.visible")
         .click();
-      getPendingRequestsTable()
-        .find("[data-cy=empty]")
-        .should("be.visible");
+      assertPendingRequestTableIsEmpty();
     });
 
     it("re visit page to check if request is set DONE in server", () => {
-      getPendingRequestsTable()
-        .find("[data-cy=empty]")
-        .should("be.visible");
+      assertPendingRequestTableIsEmpty();
     });
   });
 
@@ -189,15 +185,27 @@ describe("bao-hiem/o-to page", () => {
         .find("[data-cy=set-pending]")
         .should("be.visible")
         .click();
-      getDoneRequestsTable()
-        .find("[data-cy=empty]")
-        .should("be.visible");
+      assertDoneRequestTableIsEmpty();
     });
 
     it("re visit page to check if request is set PENDING in server", () => {
-      getDoneRequestsTable()
-        .find("[data-cy=empty]")
-        .should("be.visible");
+      assertDoneRequestTableIsEmpty();
+    });
+  });
+
+  describe("delete request", () => {
+    it("clicks delete make the request disappear", () => {
+      getPendingRequestsTable()
+        .find("[data-cy=delete-button]")
+        .should("be.visible")
+        .click();
+      assertPendingRequestTableIsEmpty();
+    });
+
+    it("re visit page to check if it is deleted in server", () => {
+      assertPendingRequestTableIsEmpty();
+      switchToDoneRequests();
+      assertDoneRequestTableIsEmpty();
     });
   });
 });
@@ -224,4 +232,16 @@ function getPendingRequestsTable() {
 
 function getDoneRequestsTable() {
   return cy.get("[data-cy=done-requests]");
+}
+
+function assertPendingRequestTableIsEmpty() {
+  getPendingRequestsTable()
+    .find("[data-cy=empty]")
+    .should("be.visible");
+}
+
+function assertDoneRequestTableIsEmpty() {
+  getDoneRequestsTable()
+    .find("[data-cy=empty]")
+    .should("be.visible");
 }
