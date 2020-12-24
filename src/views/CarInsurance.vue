@@ -6,78 +6,79 @@
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item data-cy="pending-requests">Pending requests</v-tab-item>
-      <v-tab-item data-cy="done-requests">Done request</v-tab-item>
+      <v-tab-item data-cy="pending-requests">
+        <CarInsuranceRequestTable
+          :requests="carInsurancePendingRequests"
+          is-pending
+          @set-done="setDone"
+        />
+      </v-tab-item>
+      <v-tab-item data-cy="done-requests">
+        <CarInsuranceRequestTable
+          :requests="carInsuranceDoneRequests"
+          @set-pending="setPending"
+        />
+      </v-tab-item>
     </v-tabs-items>
-
-    <v-simple-table dark>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th
-              v-for="(heading, index) in tableHeadings"
-              :key="index"
-              class="text-left"
-            >
-              {{ heading }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(row, index) in carInsuranceRequests" :key="`row${index}`">
-            <td v-for="(cell, cellIndex) in row" :key="`cell${cellIndex}`">
-              {{ cell }}
-            </td>
-            <td>
-              <v-btn
-                fab
-                small
-                color="success"
-                dark
-                data-cy="set-done"
-                @click="setDone"
-              >
-                <v-icon>mdi-check</v-icon>
-              </v-btn>
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import CarInsuranceRequestTable from "@/components/insurance/CarInsuranceRequestTable.vue";
 import CarInsuranceController, {
   CarInsuranceRequest
 } from "@/controller/car-insurance";
 
 const controller = new CarInsuranceController();
+enum TAB {
+  PENDING = 0,
+  DONE = 1
+}
 
-@Component
+@Component({
+  components: {
+    CarInsuranceRequestTable
+  }
+})
 export default class CarInsurance extends Vue {
+  carInsurancePendingRequests: CarInsuranceRequest[] = [];
+  carInsuranceDoneRequests: CarInsuranceRequest[] = [];
   tab = 0;
 
-  tableHeadings: string[] = [
-    "Ngày",
-    "Tên",
-    "Email",
-    "Điện thoại",
-    "Công ty bảo hiểm",
-    "Số tiền bảo hiểm",
-    "Ghi chú"
-  ];
+  @Watch("tab")
+  onChangeTab(selectedTab: number) {
+    if (selectedTab === TAB.PENDING) {
+      this.fetchPendingRequests();
+      return;
+    }
 
-  carInsuranceRequests: CarInsuranceRequest[] = [];
+    if (selectedTab === TAB.DONE) {
+      this.fetchDoneRequests();
+      return;
+    }
+  }
 
-  async mounted() {
-    this.carInsuranceRequests = await controller.fetchRequests();
+  async fetchPendingRequests() {
+    this.carInsurancePendingRequests = await controller.fetchRequests();
     await Vue.nextTick();
   }
 
+  async fetchDoneRequests() {
+    this.carInsuranceDoneRequests = await controller.fetchRequests();
+    await Vue.nextTick();
+  }
+
+  async mounted() {
+    await this.fetchPendingRequests();
+  }
+
   setDone() {
-    this.carInsuranceRequests.splice(0, 1);
+    this.carInsurancePendingRequests.splice(0, 1);
+  }
+
+  setPending() {
+    this.carInsuranceDoneRequests.splice(0, 1);
   }
 }
 </script>
