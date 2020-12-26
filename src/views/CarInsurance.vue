@@ -1,38 +1,41 @@
 <template>
   <v-container>
-    <v-tabs v-model="tab">
-      <v-tab data-cy="request-tab">Chưa tư vấn</v-tab>
-      <v-tab data-cy="request-tab">Đã tư vấn</v-tab>
-    </v-tabs>
+    <ErrorApi v-if="isError" />
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item data-cy="pending-requests">
-        <CarInsuranceRequestTable
-          :is-loading="isLoading"
-          :is-error="isError"
-          :requests="carInsurancePendingRequests"
-          is-pending
-          @set-done="setDone"
-          @delete="deletePendingRequest"
-        />
-      </v-tab-item>
-      <v-tab-item data-cy="done-requests">
-        <CarInsuranceRequestTable
-          v-if="carInsuranceDoneRequests !== null"
-          :is-loading="isLoading"
-          :is-error="isError"
-          :requests="carInsuranceDoneRequests"
-          @set-pending="setPending"
-          @delete="deleteDoneRequest"
-        />
-      </v-tab-item>
-    </v-tabs-items>
+    <template v-else>
+      <v-tabs v-model="tab">
+        <v-tab data-cy="request-tab">Chưa tư vấn</v-tab>
+        <v-tab data-cy="request-tab">Đã tư vấn</v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item data-cy="pending-requests">
+          <CarInsuranceRequestTable
+            :is-loading="isLoading"
+            :requests="carInsurancePendingRequests"
+            is-pending
+            @set-done="setDone"
+            @delete="deletePendingRequest"
+          />
+        </v-tab-item>
+        <v-tab-item data-cy="done-requests">
+          <CarInsuranceRequestTable
+            v-if="carInsuranceDoneRequests !== null"
+            :is-loading="isLoading"
+            :requests="carInsuranceDoneRequests"
+            @set-pending="setPending"
+            @delete="deleteDoneRequest"
+          />
+        </v-tab-item>
+      </v-tabs-items>
+    </template>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import CarInsuranceRequestTable from "@/components/insurance/CarInsuranceRequestTable.vue";
+import ErrorApi from "@/components/ErrorApi.vue";
 import CarInsuranceController, {
   CarInsuranceRequest
 } from "@/controller/car-insurance";
@@ -45,7 +48,8 @@ enum TAB {
 
 @Component({
   components: {
-    CarInsuranceRequestTable
+    CarInsuranceRequestTable,
+    ErrorApi
   }
 })
 export default class CarInsurance extends Vue {

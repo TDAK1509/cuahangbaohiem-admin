@@ -71,9 +71,6 @@ export default class CarInsuranceRequestTable extends Vue {
   @Prop({ type: Boolean, default: true })
   isLoading!: boolean;
 
-  @Prop({ type: Boolean, default: true })
-  isError!: boolean;
-
   headers = [
     { text: "Ngày", value: "date" },
     { text: "Thông tin liên lạc", value: "email", sortable: false },
