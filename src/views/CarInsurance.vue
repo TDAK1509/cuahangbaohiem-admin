@@ -57,7 +57,7 @@ export default class CarInsurance extends Vue {
   carInsuranceDoneRequests: CarInsuranceRequest[] | null = null;
   tab = 0;
   isLoading = true;
-  isError = true;
+  isError = false;
 
   @Watch("tab")
   onChangeTab(selectedTab: number) {
