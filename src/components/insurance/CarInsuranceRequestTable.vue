@@ -74,16 +74,7 @@
               <v-icon>mdi-undo</v-icon>
             </v-btn>
 
-            <v-btn
-              fab
-              small
-              color="danger"
-              dark
-              data-cy="delete-button"
-              @click="deleteRequest(request.id)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+            <DeleteRequestButton @click="deleteRequest(request.id)" />
           </td>
         </tr>
       </tbody>
@@ -94,8 +85,13 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from "vue-property-decorator";
 import { CarInsuranceRequest } from "@/controller/car-insurance";
+import DeleteRequestButton from "./DeleteRequestButton.vue";
 
-@Component
+@Component({
+  components: {
+    DeleteRequestButton
+  }
+})
 export default class CarInsuranceRequestTable extends Vue {
   @Prop({ required: true, type: Array })
   requests!: CarInsuranceRequest[];
