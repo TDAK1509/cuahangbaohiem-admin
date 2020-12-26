@@ -13,14 +13,7 @@ require("firebase/firestore");
 const COLLECTION = "car_insurance_request";
 
 firebase.initializeApp({
-  piKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_FIREBASE_APP_ID,
-  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID
 });
 
 const firestore = firebase.firestore();
@@ -33,6 +26,12 @@ firestore.settings({
 
 const db = firestore.collection(COLLECTION);
 
-db.add({ test: "test" }).catch(e => {
-  console.error(e);
-});
+db.add({ test: "test" })
+  .then(doc => {
+    console.log(`${doc.id} added`);
+    process.exit();
+  })
+  .catch(e => {
+    console.error(e);
+    process.exit();
+  });
