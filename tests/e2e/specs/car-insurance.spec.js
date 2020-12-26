@@ -3,7 +3,7 @@ describe("bao-hiem/o-to page", () => {
     cy.visit("/bao-hiem/o-to");
   });
 
-  describe.skip("tabs", () => {
+  describe("tabs", () => {
     it("renders 2 tabs, 'Chưa tư vấn' and 'Đã tư vấn'", () => {
       getTabs().should("have.length", 2);
       getTabs()
@@ -29,7 +29,7 @@ describe("bao-hiem/o-to page", () => {
     });
   });
 
-  describe.skip("pending requests", () => {
+  describe("pending requests", () => {
     it("renders table with correct headings", () => {
       getPendingRequestsTable()
         .contains("Ngày")
@@ -100,7 +100,7 @@ describe("bao-hiem/o-to page", () => {
     });
   });
 
-  describe.skip("done requests", () => {
+  describe("done requests", () => {
     beforeEach(() => {
       switchToDoneRequests();
     });
@@ -232,12 +232,12 @@ function getDoneRequestsTable() {
 
 function assertPendingRequestTableIsEmpty() {
   getPendingRequestsTable()
-    .find("[data-cy=empty]")
+    .contains("No data available")
     .should("be.visible");
 }
 
 function assertDoneRequestTableIsEmpty() {
   getDoneRequestsTable()
-    .find("[data-cy=empty]")
+    .contains("No data available")
     .should("be.visible");
 }
