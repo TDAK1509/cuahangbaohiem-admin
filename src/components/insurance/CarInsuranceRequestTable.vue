@@ -8,16 +8,27 @@
   >
     <template v-slot:[`item.email`]="{ item }">
       <ul class="text-left">
-        <li>{{ item.name }}</li>
-        <li>{{ item.email }}</li>
-        <li>{{ item.phone }}</li>
+        <li>
+          <v-icon small color="black">mdi-account</v-icon> {{ item.name }}
+        </li>
+        <li><v-icon small color="black">mdi-email</v-icon> {{ item.email }}</li>
+        <li>
+          <v-icon small color="black">mdi-cellphone-iphone</v-icon>
+          {{ item.phone }}
+        </li>
       </ul>
     </template>
 
     <template v-slot:[`item.insuranceCompany`]="{ item }">
       <ul class="text-left">
-        <li>{{ item.insuranceCompany }}</li>
-        <li>{{ item.insuranceValue }}</li>
+        <li>
+          <v-icon small color="black">mdi-shield-home</v-icon>
+          {{ item.insuranceCompany }}
+        </li>
+        <li>
+          <v-icon small color="black">mdi-cash</v-icon>
+          {{ item.insuranceValue }}
+        </li>
       </ul>
     </template>
 
@@ -72,12 +83,17 @@ export default class CarInsuranceRequestTable extends Vue {
   isLoading!: boolean;
 
   headers = [
-    { text: "Ngày", value: "date" },
-    { text: "Thông tin liên lạc", value: "email", sortable: false },
+    { text: "Ngày", value: "date", width: "110px" },
+    {
+      text: "Thông tin liên lạc",
+      value: "email",
+      width: "280px",
+      sortable: false
+    },
     {
       text: "Thông tin bảo hiểm",
       value: "insuranceCompany",
-      width: "160px",
+      width: "200px",
       sortable: false
     },
     { text: "Ghi chú", value: "note", sortable: false },
