@@ -9,6 +9,7 @@ if (!isNode()) {
 require("dotenv").config();
 const firebase = require("firebase");
 require("firebase/firestore");
+const faker = require("faker");
 
 const COLLECTION = "car_insurance_request";
 
@@ -26,12 +27,33 @@ firestore.settings({
 
 const db = firestore.collection(COLLECTION);
 
-db.add({ test: "test" })
-  .then(doc => {
-    console.log(`${doc.id} added`);
+const numberOfDataToAdd = 10;
+
+addDataToServer(numberOfDataToAdd)
+  .then(() => {
+    console.log(numberOfDataToAdd + " documents are added");
     process.exit();
   })
-  .catch(e => {
-    console.error(e);
+  .catch(error => {
+    console.error(error);
     process.exit();
   });
+
+function getDummyCarInsuranceData() {
+  return {
+    date: faker.date.recent(),
+    email: faker.internet.email(),
+    name: faker.name.findName(),
+    phone: faker.phone.phoneNumber(),
+    note: faker.hacker.phrase(),
+    insuranceCompany: faker.company.companyName(),
+    insuranceValue: faker.commerce.price(),
+    isDone: false
+  };
+}
+
+async function addDataToServer(count) {
+  for (let i = 0; i < count; i++) {
+    await db.add(getDummyCarInsuranceData());
+  }
+}
