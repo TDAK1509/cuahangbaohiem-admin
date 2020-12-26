@@ -1,6 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
+    :loading="isLoading"
     :items="requests"
     sort-by="date"
     class="elevation-1"
