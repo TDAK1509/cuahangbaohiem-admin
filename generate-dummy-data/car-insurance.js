@@ -41,7 +41,7 @@ addDataToServer(numberOfDataToAdd)
 
 function getDummyCarInsuranceData() {
   return {
-    date: faker.date.recent(),
+    date: faker.date.recent().toString(),
     email: faker.internet.email(),
     name: faker.name.findName(),
     phone: faker.phone.phoneNumber(),
