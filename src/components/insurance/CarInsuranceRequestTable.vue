@@ -1,85 +1,53 @@
 <template>
-  <v-simple-table dark>
-    <template v-slot:default>
-      <thead>
-        <tr>
-          <th
-            v-for="(heading, index) in tableHeadings"
-            :key="index"
-            class="text-left"
-          >
-            {{ heading }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-if="isLoading">
-          <td :colspan="tableHeadings.length">Loading</td>
-        </tr>
-
-        <tr v-else-if="isError">
-          <td :colspan="tableHeadings.length">Error</td>
-        </tr>
-
-        <tr v-else-if="!hasRequest" data-cy="empty">
-          <td :colspan="tableHeadings.length">Empty</td>
-        </tr>
-
-        <tr
-          v-else
-          v-for="(request, index) in requests"
-          :key="`request${index}`"
-        >
-          <td>{{ request.date }}</td>
-
-          <td>
-            <ul>
-              <li>{{ request.name }}</li>
-              <li>{{ request.email }}</li>
-              <li>{{ request.phone }}</li>
-            </ul>
-          </td>
-
-          <td>
-            <ul>
-              <li>{{ request.insuranceCompany }}</li>
-              <li>{{ request.insuranceValue }}</li>
-            </ul>
-          </td>
-
-          <td>{{ request.note }}</td>
-
-          <td>
-            <v-btn
-              v-if="isPending"
-              fab
-              small
-              color="success"
-              dark
-              data-cy="set-done"
-              @click="setDone(request.id)"
-            >
-              <v-icon>mdi-check</v-icon>
-            </v-btn>
-
-            <v-btn
-              v-else
-              fab
-              small
-              color="warning"
-              dark
-              data-cy="set-pending"
-              @click="setPending(request.id)"
-            >
-              <v-icon>mdi-undo</v-icon>
-            </v-btn>
-
-            <DeleteRequestButton @click="deleteRequest(request.id)" />
-          </td>
-        </tr>
-      </tbody>
+  <v-data-table
+    :headers="headers"
+    :items="requests"
+    sort-by="date"
+    class="elevation-1"
+  >
+    <template v-slot:[`item.email`]="{ item }">
+      <ul>
+        <li>{{ item.name }}</li>
+        <li>{{ item.email }}</li>
+        <li>{{ item.phone }}</li>
+      </ul>
     </template>
-  </v-simple-table>
+
+    <template v-slot:[`item.insuranceCompany`]="{ item }">
+      <ul>
+        <li>{{ item.insuranceCompany }}</li>
+        <li>{{ item.insuranceValue }}</li>
+      </ul>
+    </template>
+
+    <template v-slot:[`item.id`]="{ item }">
+      <div>
+        <v-btn
+          v-if="isPending"
+          data-cy="set-done"
+          icon
+          x-small
+          color="success"
+          @click="setDone(item.id)"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+
+        <v-btn
+          v-else
+          data-cy="set-pending"
+          icon
+          x-small
+          color="warning"
+          @click="setPending(item.id)"
+        >
+          <v-icon>mdi-undo</v-icon>
+        </v-btn>
+
+        <DeleteRequestButton @click="deleteRequest(item.id)" />
+      </div>
+    </template>
+  </v-data-table>
 </template>
 
 <script lang="ts">
@@ -105,12 +73,17 @@ export default class CarInsuranceRequestTable extends Vue {
   @Prop({ type: Boolean, default: true })
   isError!: boolean;
 
-  tableHeadings: string[] = [
-    "Ngày",
-    "Thông tin liên lạc",
-    "Thông tin bảo hiểm",
-    "Ghi chú",
-    ""
+  headers = [
+    { text: "Ngày", value: "date" },
+    { text: "Thông tin liên lạc", value: "email", sortable: false },
+    {
+      text: "Thông tin bảo hiểm",
+      value: "insuranceCompany",
+      width: "160px",
+      sortable: false
+    },
+    { text: "Ghi chú", value: "note", sortable: false },
+    { text: "", value: "id", sortable: false, width: "120px" }
   ];
 
   get hasRequest(): boolean {

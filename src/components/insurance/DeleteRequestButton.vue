@@ -3,14 +3,13 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         data-cy="delete-button"
-        fab
-        small
-        color="danger"
-        dark
+        icon
+        x-small
+        color="red"
         v-bind="attrs"
         v-on="on"
       >
-        <v-icon>mdi-delete</v-icon>
+        <v-icon>mdi-trash-can-outline</v-icon>
       </v-btn>
     </template>
 
