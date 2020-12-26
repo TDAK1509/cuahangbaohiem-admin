@@ -11,6 +11,7 @@
     "e2e:onetime": "firebase emulators:exec 'yarn e2e:headless'",
     "backend": "firebase emulators:start --only firestore --import=./tests/firebase-fixtures/",
     "backend:export": "firebase emulators:export ./tests/firebase-fixtures/",
+    "backend:generate:car": "node ./generate-dummy-data/car-insurance.js",
     "lint": "vue-cli-service lint",
     "deploy": "yarn lint && yarn build && yarn copy:netlify-redirect && yarn deploy:netlify",
     "copy:netlify-redirect": "cp _redirects dist/_redirects",
