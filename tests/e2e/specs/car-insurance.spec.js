@@ -35,19 +35,10 @@ describe("bao-hiem/o-to page", () => {
         .contains("Ngày")
         .should("be.visible");
       getPendingRequestsTable()
-        .contains("Tên")
+        .contains("Thông tin liên lạc")
         .should("be.visible");
       getPendingRequestsTable()
-        .contains("Email")
-        .should("be.visible");
-      getPendingRequestsTable()
-        .contains("Điện thoại")
-        .should("be.visible");
-      getPendingRequestsTable()
-        .contains("Công ty bảo hiểm")
-        .should("be.visible");
-      getPendingRequestsTable()
-        .contains("Số tiền bảo hiểm")
+        .contains("Thông tin bảo hiểm")
         .should("be.visible");
       getPendingRequestsTable()
         .contains("Ghi chú")
@@ -119,19 +110,10 @@ describe("bao-hiem/o-to page", () => {
         .contains("Ngày")
         .should("be.visible");
       getDoneRequestsTable()
-        .contains("Tên")
+        .contains("Thông tin liên lạc")
         .should("be.visible");
       getDoneRequestsTable()
-        .contains("Email")
-        .should("be.visible");
-      getDoneRequestsTable()
-        .contains("Điện thoại")
-        .should("be.visible");
-      getDoneRequestsTable()
-        .contains("Công ty bảo hiểm")
-        .should("be.visible");
-      getDoneRequestsTable()
-        .contains("Số tiền bảo hiểm")
+        .contains("Thông tin bảo hiểm")
         .should("be.visible");
       getDoneRequestsTable()
         .contains("Ghi chú")

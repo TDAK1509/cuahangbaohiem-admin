@@ -31,12 +31,24 @@
           :key="`request${index}`"
         >
           <td>{{ request.date }}</td>
-          <td>{{ request.name }}</td>
-          <td>{{ request.email }}</td>
-          <td>{{ request.phone }}</td>
-          <td>{{ request.insuranceCompany }}</td>
-          <td>{{ request.insuranceValue }}</td>
+
+          <td>
+            <ul>
+              <li>{{ request.name }}</li>
+              <li>{{ request.email }}</li>
+              <li>{{ request.phone }}</li>
+            </ul>
+          </td>
+
+          <td>
+            <ul>
+              <li>{{ request.insuranceCompany }}</li>
+              <li>{{ request.insuranceValue }}</li>
+            </ul>
+          </td>
+
           <td>{{ request.note }}</td>
+
           <td>
             <v-btn
               v-if="isPending"
@@ -99,12 +111,10 @@ export default class CarInsuranceRequestTable extends Vue {
 
   tableHeadings: string[] = [
     "Ngày",
-    "Tên",
-    "Email",
-    "Điện thoại",
-    "Công ty bảo hiểm",
-    "Số tiền bảo hiểm",
-    "Ghi chú"
+    "Thông tin liên lạc",
+    "Thông tin bảo hiểm",
+    "Ghi chú",
+    ""
   ];
 
   get hasRequest(): boolean {
