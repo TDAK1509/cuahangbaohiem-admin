@@ -7,7 +7,7 @@
     class="elevation-1"
   >
     <template v-slot:[`item.email`]="{ item }">
-      <ul>
+      <ul class="text-left">
         <li>{{ item.name }}</li>
         <li>{{ item.email }}</li>
         <li>{{ item.phone }}</li>
@@ -15,7 +15,7 @@
     </template>
 
     <template v-slot:[`item.insuranceCompany`]="{ item }">
-      <ul>
+      <ul class="text-left">
         <li>{{ item.insuranceCompany }}</li>
         <li>{{ item.insuranceValue }}</li>
       </ul>
