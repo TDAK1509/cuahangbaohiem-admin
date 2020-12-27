@@ -34,27 +34,29 @@
 
     <template v-slot:[`item.id`]="{ item }">
       <div>
-        <v-btn
-          v-if="isPending"
-          data-cy="set-done"
-          icon
-          x-small
-          color="success"
-          @click="setDone(item.id)"
-        >
-          <v-icon>mdi-check</v-icon>
-        </v-btn>
+        <span class="mr-2">
+          <v-btn
+            v-if="isPending"
+            data-cy="set-done"
+            icon
+            x-small
+            color="success"
+            @click="setDone(item.id)"
+          >
+            <v-icon>mdi-check</v-icon>
+          </v-btn>
 
-        <v-btn
-          v-else
-          data-cy="set-pending"
-          icon
-          x-small
-          color="warning"
-          @click="setPending(item.id)"
-        >
-          <v-icon>mdi-undo</v-icon>
-        </v-btn>
+          <v-btn
+            v-else
+            data-cy="set-pending"
+            icon
+            x-small
+            color="warning"
+            @click="setPending(item.id)"
+          >
+            <v-icon>mdi-undo</v-icon>
+          </v-btn>
+        </span>
 
         <DeleteRequestButton @click="deleteRequest(item.id)" />
       </div>
