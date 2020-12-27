@@ -47,6 +47,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "faker": "^5.1.0",
     "firebase-tools": "^9.0.1",
+    "moment-timezone": "^0.5.32",
     "prettier": "^1.19.1",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",

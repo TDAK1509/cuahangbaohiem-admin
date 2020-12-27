@@ -2,6 +2,7 @@ import CarInsuranceModel, {
   RawCarInsuranceRequest
 } from "@/models/car-insurance";
 import moment from "moment";
+import "moment-timezone";
 
 export type CarInsuranceRequest = RawCarInsuranceRequest;
 
@@ -24,9 +25,9 @@ export default class CarInsurance {
   ): CarInsuranceRequest[] {
     return rawRequests.map(rawRequest => {
       const request = { ...rawRequest };
-      request.date = moment(new Date(rawRequest.date)).format(
-        "YYYY-MM-DD hh:mm:ss"
-      );
+      request.date = moment(new Date(rawRequest.date))
+        .tz("Asia/Ho_Chi_Minh")
+        .format("YYYY-MM-DD hh:mm:ss");
       return request;
     });
   }
