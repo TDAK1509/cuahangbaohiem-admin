@@ -109,14 +109,14 @@ export default class CarInsurance extends Vue {
   }
 
   setDone(requestId: string) {
-    this.removePendingRequestLocally(requestId);
+    this.removePendingRequestFromVueData(requestId);
 
     controller.setRequestDone(requestId).catch(() => {
       this.isError = true;
     });
   }
 
-  removePendingRequestLocally(requestId: string) {
+  removePendingRequestFromVueData(requestId: string) {
     const targetRequest = this.carInsurancePendingRequests.findIndex(
       request => request.id === requestId
     );
@@ -124,14 +124,14 @@ export default class CarInsurance extends Vue {
   }
 
   setPending(requestId: string) {
-    this.removeDoneRequestLocally(requestId);
+    this.removeDoneRequestFromVueData(requestId);
 
     controller.setRequestPending(requestId).catch(() => {
       this.isError = true;
     });
   }
 
-  removeDoneRequestLocally(requestId: string) {
+  removeDoneRequestFromVueData(requestId: string) {
     if (this.carInsuranceDoneRequests === null) {
       return;
     }
@@ -143,7 +143,7 @@ export default class CarInsurance extends Vue {
   }
 
   deletePendingRequest(requestId: string) {
-    this.removePendingRequestLocally(requestId);
+    this.removePendingRequestFromVueData(requestId);
 
     controller.deleteRequest(requestId).catch(() => {
       this.isError = true;
@@ -151,7 +151,7 @@ export default class CarInsurance extends Vue {
   }
 
   deleteDoneRequest(requestId: string) {
-    this.removeDoneRequestLocally(requestId);
+    this.removeDoneRequestFromVueData(requestId);
 
     controller.deleteRequest(requestId).catch(() => {
       this.isError = true;
