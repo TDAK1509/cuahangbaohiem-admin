@@ -109,16 +109,29 @@ export default class CarInsurance extends Vue {
   }
 
   setDone(requestId: string) {
-    const targetRequest = this.carInsurancePendingRequests.findIndex(
-      request => request.id === requestId
-    );
-    this.carInsurancePendingRequests.splice(targetRequest, 1);
+    this.removePendingRequestLocally(requestId);
+
     controller.setRequestDone(requestId).catch(() => {
       this.isError = true;
     });
   }
 
+  removePendingRequestLocally(requestId: string) {
+    const targetRequest = this.carInsurancePendingRequests.findIndex(
+      request => request.id === requestId
+    );
+    this.carInsurancePendingRequests.splice(targetRequest, 1);
+  }
+
   setPending(requestId: string) {
+    this.removeDoneRequestLocally(requestId);
+
+    controller.setRequestPending(requestId).catch(() => {
+      this.isError = true;
+    });
+  }
+
+  removeDoneRequestLocally(requestId: string) {
     if (this.carInsuranceDoneRequests === null) {
       return;
     }
@@ -127,30 +140,19 @@ export default class CarInsurance extends Vue {
       request => request.id === requestId
     );
     this.carInsuranceDoneRequests.splice(targetRequest, 1);
-    controller.setRequestPending(requestId).catch(() => {
-      this.isError = true;
-    });
   }
 
   deletePendingRequest(requestId: string) {
-    const targetRequest = this.carInsurancePendingRequests.findIndex(
-      request => request.id === requestId
-    );
-    this.carInsurancePendingRequests.splice(targetRequest, 1);
+    this.removePendingRequestLocally(requestId);
+
     controller.deleteRequest(requestId).catch(() => {
       this.isError = true;
     });
   }
 
   deleteDoneRequest(requestId: string) {
-    if (this.carInsuranceDoneRequests === null) {
-      return;
-    }
+    this.removeDoneRequestLocally(requestId);
 
-    const targetRequest = this.carInsuranceDoneRequests.findIndex(
-      request => request.id === requestId
-    );
-    this.carInsuranceDoneRequests.splice(targetRequest, 1);
     controller.deleteRequest(requestId).catch(() => {
       this.isError = true;
     });
