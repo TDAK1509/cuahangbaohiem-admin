@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" persistent max-width="290">
+  <v-dialog v-model="show" persistent max-width="330">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         data-cy="delete-button"
@@ -15,24 +15,23 @@
 
     <v-card data-cy="confirm-delete-modal">
       <v-card-title class="headline">
-        Use Google's location service?
+        Bạn có chắc chắn không?
       </v-card-title>
-      <v-card-text
-        >Let Google help apps determine location. This means sending anonymous
-        location data to Google, even when no apps are running.</v-card-text
-      >
+      <v-card-text>
+        Sau khi xóa sẽ không lấy lại được. Bạn có chắc là mình muốn xóa không?
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="closeModal">
-          Disagree
+        <v-btn text @click="closeModal">
+          Không
         </v-btn>
         <v-btn
           data-cy="confirm-delete-button"
-          color="green darken-1"
+          color="red"
           text
           @click="onClickConfirm"
         >
-          Agree
+          Có
         </v-btn>
       </v-card-actions>
     </v-card>
