@@ -3,9 +3,15 @@
     <ErrorApi v-if="isError" />
 
     <template v-else>
-      <v-tabs v-model="tab">
-        <v-tab data-cy="request-tab">Chưa tư vấn</v-tab>
-        <v-tab data-cy="request-tab">Đã tư vấn</v-tab>
+      <v-tabs v-model="tab" icons-and-text dark background-color="dark">
+        <v-tab data-cy="request-tab">
+          Chưa tư vấn
+          <v-icon>mdi-phone</v-icon>
+        </v-tab>
+        <v-tab data-cy="request-tab">
+          Đã tư vấn
+          <v-icon>mdi-check</v-icon>
+        </v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="tab">
