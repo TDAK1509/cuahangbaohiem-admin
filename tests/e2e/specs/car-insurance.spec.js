@@ -8,10 +8,10 @@ describe("bao-hiem/o-to page", () => {
       getTabs().should("have.length", 2);
       getTabs()
         .first()
-        .should("have.text", "Chưa tư vấn");
+        .should("contain", "Chưa tư vấn");
       getTabs()
         .last()
-        .should("have.text", "Đã tư vấn");
+        .should("contain", "Đã tư vấn");
     });
 
     it("clicks 'Đã tư vấn' shows done requests", () => {
