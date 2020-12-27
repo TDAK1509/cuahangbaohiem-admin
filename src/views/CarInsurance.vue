@@ -67,7 +67,11 @@ export default class CarInsurance extends Vue {
 
   @Watch("tab")
   onChangeTab(selectedTab: number) {
-    if (selectedTab === TAB.DONE && this.carInsuranceDoneRequests === null) {
+    if (selectedTab === TAB.PENDING) {
+      return this.fetchPendingRequests();
+    }
+
+    if (selectedTab === TAB.DONE) {
       return this.fetchDoneRequests();
     }
   }
