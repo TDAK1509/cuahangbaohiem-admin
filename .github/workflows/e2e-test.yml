@@ -8,8 +8,12 @@ on:
       - "**" # matches every branch
       - "!main" # excludes main
 
+env:
+  SKIP_E2E: true
+
 jobs:
   e2e-test:
+    if: ${{ env.SKIP_E2E != 'true' }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
