@@ -1,6 +1,5 @@
 {
   "baseUrl": "http://localhost:8080",
-  "projectId": "c43w9v",
   "fixturesFolder": "tests/e2e/fixtures",
   "integrationFolder": "tests/e2e/integration",
   "pluginsFile": "tests/e2e/plugins/index.js",
