@@ -14,6 +14,9 @@
         label="Password"
         :rules="rules.password"
       />
+
+      <p class="red--text">{{ errorMessage }}</p>
+
       <v-btn data-cy="login-button" type="submit">Login</v-btn>
     </v-form>
   </v-app>
@@ -27,6 +30,7 @@ export default class Login extends Vue {
   isFormValid = false;
   email = "";
   password = "";
+  errorMessage = "";
 
   rules = {
     email: [
@@ -38,6 +42,18 @@ export default class Login extends Vue {
 
   login() {
     this.validateForm();
+
+    if (!this.isFormValid) {
+      return;
+    }
+
+    if (
+      this.email !== "correct-email@gmail.com" ||
+      this.password !== "correct-password"
+    ) {
+      this.errorMessage = "Email hoặc password không chính xác";
+      return;
+    }
   }
 
   validateForm() {

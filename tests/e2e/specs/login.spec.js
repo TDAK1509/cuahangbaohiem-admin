@@ -28,10 +28,17 @@ describe("Login page", () => {
         cy.contains("Vui lòng điền mật khẩu").should("be.visible");
       });
 
-      it("enter wrongs email shows correct message", () => {
+      it("enter wrongs email shows correct error message", () => {
         getEmailField().type("wrong-email");
         getLoginButton().click();
         cy.contains("Định dạng email không chính xác").should("be.visible");
+      });
+
+      it("enter wrong email but correct password shows correct error message", () => {
+        getEmailField().type("wrong-email@gmail.com");
+        getPasswordField().type("correctPassword");
+        getLoginButton().click();
+        cy.contains("Email hoặc password không chính xác").should("be.visible");
       });
     });
   });
