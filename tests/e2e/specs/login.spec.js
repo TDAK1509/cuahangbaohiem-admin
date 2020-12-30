@@ -18,9 +18,9 @@ describe("Login page", () => {
 
   describe("form handling", () => {
     it("clicks LOGIN button shows 2 errors", () => {
-      getFormErrorMessages().should("have.length", 0);
       getLoginButton().click();
-      getFormErrorMessages().should("have.length", 2);
+      cy.contains("Vui lòng điền email").should("be.visible");
+      cy.contains("Vui lòng điền mật khẩu").should("be.visible");
     });
   });
 });
@@ -35,8 +35,4 @@ function getPasswordField() {
 
 function getLoginButton() {
   return cy.get("[data-cy=login-button]");
-}
-
-function getFormErrorMessages() {
-  return cy.get(".v-text-field__details .error--text");
 }
