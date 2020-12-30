@@ -36,7 +36,14 @@ describe("Login page", () => {
 
       it("enter wrong email but correct password shows correct error message", () => {
         getEmailField().type("wrong-email@gmail.com");
-        getPasswordField().type("correctPassword");
+        getPasswordField().type("correct-password");
+        getLoginButton().click();
+        cy.contains("Email hoặc password không chính xác").should("be.visible");
+      });
+
+      it("enter correct email but wrong password shows correct error message", () => {
+        getEmailField().type("correct-email@gmail.com");
+        getPasswordField().type("wrong-password");
         getLoginButton().click();
         cy.contains("Email hoặc password không chính xác").should("be.visible");
       });
