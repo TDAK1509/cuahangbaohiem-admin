@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import AuthController from "@/controller/auth";
 
 Vue.use(VueRouter);
 
@@ -43,7 +44,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== "Login") {
+  if (to.name !== "Login" && !AuthController.isAuth()) {
     next({ name: "Login" });
     return;
   }

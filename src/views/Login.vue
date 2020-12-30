@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import AuthController from "@/controller/auth";
 
 @Component
 export default class Login extends Vue {
@@ -54,6 +55,9 @@ export default class Login extends Vue {
       this.errorMessage = "Email hoặc password không chính xác";
       return;
     }
+
+    AuthController.setIsAuth();
+    this.$router.push("/");
   }
 
   validateForm() {

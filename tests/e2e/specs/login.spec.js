@@ -1,3 +1,8 @@
+const CORRECT_EMAIL = "correct-email@gmail.com";
+const CORRECT_PASSWORD = "correct-password";
+const WRONG_EMAIL = "wrong-email@gmail.com";
+const WRONG_PASSWORD = "wrong-password";
+
 describe("Login page", () => {
   it("redirects to login page if not logged in", () => {
     cy.visit("/");
@@ -29,23 +34,31 @@ describe("Login page", () => {
       });
 
       it("enter wrongs email shows correct error message", () => {
-        getEmailField().type("wrong-email");
+        getEmailField().type("wrong-email-format");
         getLoginButton().click();
         cy.contains("Định dạng email không chính xác").should("be.visible");
       });
 
       it("enter wrong email but correct password shows correct error message", () => {
-        getEmailField().type("wrong-email@gmail.com");
-        getPasswordField().type("correct-password");
+        getEmailField().type(WRONG_EMAIL);
+        getPasswordField().type(CORRECT_PASSWORD);
         getLoginButton().click();
         cy.contains("Email hoặc password không chính xác").should("be.visible");
       });
 
       it("enter correct email but wrong password shows correct error message", () => {
-        getEmailField().type("correct-email@gmail.com");
-        getPasswordField().type("wrong-password");
+        getEmailField().type(CORRECT_EMAIL);
+        getPasswordField().type(WRONG_PASSWORD);
         getLoginButton().click();
         cy.contains("Email hoặc password không chính xác").should("be.visible");
+      });
+
+      it("navigates to home page if login successfully", () => {
+        getEmailField().type(CORRECT_EMAIL);
+        getPasswordField().type(CORRECT_PASSWORD);
+        getLoginButton().click();
+        const homeUrl = Cypress.config().baseUrl + "/";
+        cy.url().should("eq", homeUrl);
       });
     });
   });
