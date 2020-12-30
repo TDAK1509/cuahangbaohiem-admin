@@ -12,13 +12,18 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "*",
-    name: "Not Found",
+    name: "NotFound",
     component: () => import("../views/NotFound.vue")
   },
   {
     path: "/bao-hiem/o-to",
     name: "CarInsurance",
     component: () => import("../views/CarInsurance.vue")
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/Login.vue")
   }
 ];
 
@@ -26,6 +31,15 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== "Login") {
+    next({ name: "Login" });
+    return;
+  }
+
+  next();
 });
 
 export default router;
