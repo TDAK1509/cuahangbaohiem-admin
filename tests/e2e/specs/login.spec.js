@@ -10,9 +10,33 @@ describe("Login page", () => {
     });
 
     it("renders email field, password field, and login button", () => {
-      cy.get("[data-cy=email]").should("be.visible");
-      cy.get("[data-cy=password]").should("be.visible");
-      cy.get("[data-cy=button]").should("be.visible");
+      getEmailField().should("be.visible");
+      getPasswordField().should("be.visible");
+      getLoginButton().should("be.visible");
+    });
+  });
+
+  describe("form handling", () => {
+    it("clicks LOGIN button shows 2 errors", () => {
+      getFormErrorMessages().should("have.length", 0);
+      getLoginButton().click();
+      getFormErrorMessages().should("have.length", 2);
     });
   });
 });
+
+function getEmailField() {
+  return cy.get("[data-cy=email]");
+}
+
+function getPasswordField() {
+  return cy.get("[data-cy=password]");
+}
+
+function getLoginButton() {
+  return cy.get("[data-cy=login-button]");
+}
+
+function getFormErrorMessages() {
+  return cy.get(".v-text-field__details .error--text");
+}
