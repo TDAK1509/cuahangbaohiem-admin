@@ -8,18 +8,27 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: "/",
+        name: "HomePageContent",
+        component: () => import("../views/HomePageContent.vue")
+      },
+      {
+        path: "/bao-hiem/o-to",
+        name: "CarInsurance",
+        component: () => import("../views/CarInsurance.vue")
+      }
+    ]
   },
+
   {
     path: "*",
     name: "NotFound",
     component: () => import("../views/NotFound.vue")
   },
-  {
-    path: "/bao-hiem/o-to",
-    name: "CarInsurance",
-    component: () => import("../views/CarInsurance.vue")
-  },
+
   {
     path: "/login",
     name: "Login",

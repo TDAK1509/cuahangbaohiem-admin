@@ -10,7 +10,7 @@ describe("Home page", () => {
 
     it("clicking logo goes to home page", () => {
       const homePageUrl = Cypress.config().baseUrl + "/";
-      cy.visit("/blabla");
+      cy.visit("/bao-hiem/o-to");
       cy.url().should("not.eq", homePageUrl);
       cy.get("[data-cy=logo]").click();
       cy.url().should("eq", homePageUrl);
