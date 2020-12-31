@@ -176,7 +176,7 @@ describe("bao-hiem/o-to page", () => {
     });
   });
 
-  describe("delete request", () => {
+  describe.skip("delete request", () => {
     it("clicks delete open confirm modal", () => {
       cy.get("[data-cy=confirm-delete-modal]").should("not.exist");
 
