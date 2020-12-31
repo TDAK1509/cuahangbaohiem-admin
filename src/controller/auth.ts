@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import AuthModel from "@/models/auth";
 import router from "@/router";
 
@@ -6,7 +5,7 @@ export const LOCAL_STORAGE_KEY = "chbh_admin_auth";
 
 export default class AuthController {
   public static watchLoggedInState() {
-    const callbackLoggedIn = (user: firebase.User) => {
+    const callbackLoggedIn = () => {
       AuthController.setIsAuth();
       AuthController.redirectToHomePageIfIsInLoginPage();
     };
