@@ -11,7 +11,7 @@ describe("Login page", () => {
     });
   });
 
-  beforeEach(() => {
+  afterEach(() => {
     cy.logout();
   });
 

@@ -8,7 +8,7 @@
     "test": "vue-cli-service test:unit --passWithNoTests",
     "e2e": "cypress open --browser chrome",
     "e2e:headless": "cypress run",
-    "e2e:onetime": "firebase emulators:exec --import=./tests/firebase-fixtures/ 'backend:create-user && yarn e2e:headless'",
+    "e2e:onetime": "firebase emulators:exec --import=./tests/firebase-fixtures/ 'yarn backend:generate:user && yarn e2e:headless'",
     "backend": "firebase emulators:start --import=./tests/firebase-fixtures/",
     "backend:export": "firebase emulators:export ./tests/firebase-fixtures/",
     "backend:generate:all": "yarn backend:create-user && yarn backend:generate:car",

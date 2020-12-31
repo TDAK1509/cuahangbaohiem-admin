@@ -4,6 +4,10 @@ describe("bao-hiem/o-to page", () => {
     cy.visit("/bao-hiem/o-to");
   });
 
+  afterEach(() => {
+    cy.logout();
+  });
+
   describe("tabs", () => {
     it("renders 2 tabs, 'Chưa tư vấn' and 'Đã tư vấn'", () => {
       getTabs().should("have.length", 2);

@@ -1,6 +1,10 @@
 describe("Home page", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.login();
+  });
+
+  afterEach(() => {
+    cy.logout();
   });
 
   describe("Header bar", () => {
