@@ -1,4 +1,7 @@
 import AuthController, { LOCAL_STORAGE_KEY } from "@/controller/auth";
+import AuthModel from "@/models/auth";
+
+jest.mock("@/models/auth");
 
 describe("AuthController", () => {
   beforeEach(() => {
@@ -31,6 +34,16 @@ describe("AuthController", () => {
       expect(AuthController.isAuth()).toBe(true);
       AuthController.clearAuth();
       expect(AuthController.isAuth()).toBe(false);
+    });
+  });
+
+  describe("login()", () => {
+    it("calls AuthModel.login with email and password", () => {
+      const mockLogin = jest.fn();
+      AuthModel.login = mockLogin;
+      AuthController.login("email", "password");
+      expect(mockLogin).toHaveBeenCalledTimes(1);
+      expect(mockLogin).toHaveBeenCalledWith("email", "password");
     });
   });
 });
