@@ -10,9 +10,8 @@ const PROJECT_ID = process.env.VUE_APP_FIREBASE_PROJECT_ID;
   await initializeEmulatorAdmin("localhost")
     .auth()
     .createUser({
-      uid: "ID",
-      email: "correct-email@gmail.com",
-      password: "correct-password"
+      email: "test@gmail.com",
+      password: "abc123"
     });
 
   console.log("User created successfully");
