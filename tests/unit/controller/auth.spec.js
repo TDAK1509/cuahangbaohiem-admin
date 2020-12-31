@@ -1,3 +1,5 @@
+jest.mock("@/models/fire");
+
 import AuthController, { LOCAL_STORAGE_KEY } from "@/controller/auth";
 import AuthModel from "@/models/auth";
 
