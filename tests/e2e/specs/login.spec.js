@@ -1,9 +1,16 @@
-const CORRECT_EMAIL = "correct-email@gmail.com";
-const CORRECT_PASSWORD = "correct-password";
+let correctEmail = "";
+let correctPassword = "";
 const WRONG_EMAIL = "wrong-email@gmail.com";
 const WRONG_PASSWORD = "wrong-password";
 
 describe("Login page", () => {
+  before(() => {
+    cy.fixture("user").then(({ email, password }) => {
+      correctEmail = email;
+      correctPassword = password;
+    });
+  });
+
   it("redirects to login page if not logged in", () => {
     cy.visit("/");
     cy.url().should("include", "/login");
@@ -41,21 +48,21 @@ describe("Login page", () => {
 
       it("enter wrong email but correct password shows correct error message", () => {
         getEmailField().type(WRONG_EMAIL);
-        getPasswordField().type(CORRECT_PASSWORD);
+        getPasswordField().type(correctPassword);
         getLoginButton().click();
         cy.contains("Email hoặc password không chính xác").should("be.visible");
       });
 
       it("enter correct email but wrong password shows correct error message", () => {
-        getEmailField().type(CORRECT_EMAIL);
+        getEmailField().type(correctEmail);
         getPasswordField().type(WRONG_PASSWORD);
         getLoginButton().click();
         cy.contains("Email hoặc password không chính xác").should("be.visible");
       });
 
       it("navigates to home page if login successfully", () => {
-        getEmailField().type(CORRECT_EMAIL);
-        getPasswordField().type(CORRECT_PASSWORD);
+        getEmailField().type(correctEmail);
+        getPasswordField().type(correctPassword);
         getLoginButton().click();
         const homeUrl = Cypress.config().baseUrl + "/";
         cy.url().should("eq", homeUrl);
