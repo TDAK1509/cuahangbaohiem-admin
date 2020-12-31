@@ -1,24 +1,48 @@
 <template>
   <v-app>
-    <v-form v-model="isFormValid" ref="form" @submit.prevent="login">
-      <v-text-field
-        v-model="email"
-        data-cy="email"
-        label="Email"
-        :rules="rules.email"
-      />
-      <v-text-field
-        v-model="password"
-        data-cy="password"
-        type="password"
-        label="Password"
-        :rules="rules.password"
-      />
+    <v-main>
+      <v-container>
+        <div class="login">
+          <v-form
+            v-model="isFormValid"
+            ref="form"
+            class="login__form"
+            @submit.prevent="login"
+          >
+            <h2 class="mb-4">Trang quản lý cuahangbaohiem.com</h2>
 
-      <p class="red--text">{{ errorMessage }}</p>
+            <v-text-field
+              v-model="email"
+              data-cy="email"
+              label="Email"
+              :rules="rules.email"
+              prepend-inner-icon="mdi-email"
+            />
+            <v-text-field
+              v-model="password"
+              data-cy="password"
+              type="password"
+              label="Password"
+              :rules="rules.password"
+              prepend-inner-icon="mdi-key"
+            />
 
-      <v-btn data-cy="login-button" type="submit">Login</v-btn>
-    </v-form>
+            <p class="red--text">{{ errorMessage }}</p>
+
+            <v-btn
+              data-cy="login-button"
+              type="submit"
+              :loading="isLoggingIn"
+              width="100%"
+              color="black"
+              dark
+            >
+              Đăng nhập
+            </v-btn>
+          </v-form>
+        </div>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
@@ -32,6 +56,7 @@ export default class Login extends Vue {
   email = "";
   password = "";
   errorMessage = "";
+  isLoggingIn = false;
 
   rules = {
     email: [
@@ -41,17 +66,22 @@ export default class Login extends Vue {
     password: [(v: string) => !!v || "Vui lòng điền mật khẩu"]
   };
 
-  login() {
+  async login() {
     this.validateForm();
 
     if (!this.isFormValid) {
       return;
     }
 
-    AuthController.login(this.email, this.password).catch(() => {
+    this.isLoggingIn = true;
+
+    try {
+      await AuthController.login(this.email, this.password);
+    } catch {
       this.errorMessage = "Email hoặc password không chính xác";
-      return;
-    });
+    } finally {
+      this.isLoggingIn = false;
+    }
   }
 
   validateForm() {
@@ -59,3 +89,19 @@ export default class Login extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.login {
+  max-width: 400px;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.login__form {
+  flex: 1;
+}
+</style>
