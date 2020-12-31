@@ -9,15 +9,6 @@ describe("Login page", () => {
     cy.url().should("include", "/login");
   });
 
-  it("manually create firebase account", () => {
-    cy.visit("http://localhost:4000/auth");
-    cy.contains("Add user").click();
-    cy.wait(2000);
-    cy.get("input[name=email]").type(CORRECT_EMAIL);
-    cy.get("input[name=password]").type(CORRECT_PASSWORD);
-    cy.get("button[type=submit]").click();
-  });
-
   describe("login page", () => {
     beforeEach(() => {
       cy.visit("/login");
