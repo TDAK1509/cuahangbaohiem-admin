@@ -34,3 +34,8 @@ Cypress.Commands.add("login", () => {
     cy.url().should("eq", homeUrl);
   });
 });
+
+Cypress.Commands.add("logout", () => {
+  indexedDB.deleteDatabase("firebaseLocalStorageDb");
+  localStorage.clear();
+});

@@ -48,14 +48,10 @@ export default class Login extends Vue {
       return;
     }
 
-    AuthController.login(this.email, this.password)
-      .then(() => {
-        this.$router.push("/");
-      })
-      .catch(() => {
-        this.errorMessage = "Email hoặc password không chính xác";
-        return;
-      });
+    AuthController.login(this.email, this.password).catch(() => {
+      this.errorMessage = "Email hoặc password không chính xác";
+      return;
+    });
   }
 
   validateForm() {

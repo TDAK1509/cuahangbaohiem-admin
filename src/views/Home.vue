@@ -4,13 +4,7 @@
       <SideBar />
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left color="black" dark>
-      <v-app-bar-nav-icon v-if="isMobile" @click="drawer = !drawer" />
-
-      <router-link data-cy="logo" class="home__title" to="/">
-        <img class="home__logo" src="@/assets/logo.png" />
-      </router-link>
-    </v-app-bar>
+    <HeaderBar @click-logo="toggleDrawer" />
 
     <v-main>
       <router-view />
@@ -20,13 +14,15 @@
 
 <script>
 import SideBar from "@/components/SideBar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
 import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 
 export default {
-  name: "App",
+  name: "Home",
 
   components: {
-    SideBar
+    SideBar,
+    HeaderBar
   },
 
   data: () => ({ drawer: null }),
@@ -35,18 +31,13 @@ export default {
     isMobile() {
       return window.innerWidth <= MOBILE_BREAKPOINT;
     }
+  },
+
+  methods: {
+    toggleDrawer() {
+      this.drawer = !this.drawer;
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.home__title {
-  display: flex;
-  align-items: center;
-  height: 50px;
-  margin-left: 1rem;
-}
-.home__logo {
-  height: 70%;
-}
-</style>
