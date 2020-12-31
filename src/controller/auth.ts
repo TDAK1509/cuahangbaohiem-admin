@@ -33,4 +33,8 @@ export default class AuthController {
   public static login(email: string, password: string) {
     return AuthModel.login(email, password);
   }
+
+  public static logout() {
+    return AuthModel.logout();
+  }
 }

@@ -8,6 +8,10 @@ export default class AuthModel {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
+  public static logout() {
+    return auth.signOut();
+  }
+
   public static watchLoginState(
     callbackLoggedIn: Function,
     callbackNotLoggedIn: Function

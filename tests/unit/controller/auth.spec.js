@@ -46,4 +46,13 @@ describe("AuthController", () => {
       expect(mockLogin).toHaveBeenCalledWith("email", "password");
     });
   });
+
+  describe("logout()", () => {
+    it("calls AuthModel.logout", () => {
+      const mockLogout = jest.fn();
+      AuthModel.logout = mockLogout;
+      AuthController.logout();
+      expect(mockLogout).toHaveBeenCalledTimes(1);
+    });
+  });
 });
