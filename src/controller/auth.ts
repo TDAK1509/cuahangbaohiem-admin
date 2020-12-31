@@ -8,4 +8,8 @@ export default class AuthController {
   public static setIsAuth() {
     localStorage.setItem(LOCAL_STORAGE_KEY, "true");
   }
+
+  public static clearAuth() {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  }
 }

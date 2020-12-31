@@ -24,4 +24,13 @@ describe("AuthController", () => {
       expect(AuthController.isAuth()).toBe(true);
     });
   });
+
+  describe("clearAuth()", () => {
+    it("isAuth() returns false after clearing", () => {
+      localStorage.setItem(LOCAL_STORAGE_KEY, "true");
+      expect(AuthController.isAuth()).toBe(true);
+      AuthController.clearAuth();
+      expect(AuthController.isAuth()).toBe(false);
+    });
+  });
 });
