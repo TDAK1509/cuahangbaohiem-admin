@@ -1,11 +1,17 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
 export default class FireBase {
   private _firestore!: firebase.firestore.Firestore;
+  private _auth!: firebase.auth.Auth;
 
   get firestore(): firebase.firestore.Firestore {
     return this._firestore;
+  }
+
+  get auth(): firebase.auth.Auth {
+    return this._auth;
   }
 
   constructor() {
@@ -15,6 +21,7 @@ export default class FireBase {
   private setup() {
     this.initFirebase();
     this.initFirestore();
+    this.initAuth();
   }
 
   private initFirebase() {
@@ -32,7 +39,7 @@ export default class FireBase {
   private initFirestore() {
     this._firestore = firebase.firestore();
 
-    if (process.env.NODE_ENV === "development") {
+    if (this.isDevelopmentEnvironment()) {
       try {
         this._firestore.settings({
           host: "localhost:8081",
@@ -43,6 +50,19 @@ export default class FireBase {
         /* eslint-disable */
         console.warn("Firestore is initialized already");
       }
+    }
+  }
+
+  private isDevelopmentEnvironment() {
+    return process.env.NODE_ENV === "development";
+  }
+
+  private initAuth() {
+    this._auth = firebase.auth();
+
+    if (this.isDevelopmentEnvironment()) {
+      const EMULATOR_AUTH_URL = "http://localhost:9099/";
+      this._auth.useEmulator(EMULATOR_AUTH_URL);
     }
   }
 }

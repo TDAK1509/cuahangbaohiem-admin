@@ -5,7 +5,13 @@
 </template>
 
 <script>
+import AuthController from "@/controller/auth";
+
 export default {
-  name: "App"
+  name: "App",
+
+  mounted() {
+    AuthController.watchLoggedInState();
+  }
 };
 </script>
