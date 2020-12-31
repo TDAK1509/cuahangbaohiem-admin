@@ -2,7 +2,6 @@ import Fire from "./fire";
 
 const firebase = new Fire();
 const firestore = firebase.firestore;
-const db = firestore.collection("car_insurance_request");
 
 export interface RawCarInsuranceRequest {
   id: string;
@@ -17,10 +16,15 @@ export interface RawCarInsuranceRequest {
 }
 
 export default class CarInsuranceModel {
+  private static getFirestoreCollection() {
+    return firestore.collection("car_insurance_request");
+  }
+
   public static async fetchPendingRequests(): Promise<
     RawCarInsuranceRequest[]
   > {
     const rawRequests: RawCarInsuranceRequest[] = [];
+    const db = this.getFirestoreCollection();
 
     const querySnapshot = await db.where("isDone", "==", false).get();
 
@@ -35,6 +39,7 @@ export default class CarInsuranceModel {
 
   public static async fetchDoneRequests(): Promise<RawCarInsuranceRequest[]> {
     const rawRequests: RawCarInsuranceRequest[] = [];
+    const db = this.getFirestoreCollection();
 
     const querySnapshot = await db.where("isDone", "==", true).get();
 
@@ -48,14 +53,20 @@ export default class CarInsuranceModel {
   }
 
   public static setRequestDone(requestId: string) {
-    return db.doc(requestId).update({ isDone: true });
+    return this.getFirestoreCollection()
+      .doc(requestId)
+      .update({ isDone: true });
   }
 
   public static setRequestPending(requestId: string) {
-    return db.doc(requestId).update({ isDone: false });
+    return this.getFirestoreCollection()
+      .doc(requestId)
+      .update({ isDone: false });
   }
 
   public static deleteRequest(requestId: string) {
-    return db.doc(requestId).delete();
+    return this.getFirestoreCollection()
+      .doc(requestId)
+      .delete();
   }
 }

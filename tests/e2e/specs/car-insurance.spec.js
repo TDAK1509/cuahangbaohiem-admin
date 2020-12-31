@@ -1,6 +1,11 @@
 describe("bao-hiem/o-to page", () => {
   beforeEach(() => {
+    cy.login();
     cy.visit("/bao-hiem/o-to");
+  });
+
+  afterEach(() => {
+    cy.logout();
   });
 
   describe("tabs", () => {

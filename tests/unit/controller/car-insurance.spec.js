@@ -1,3 +1,5 @@
+jest.mock("@/models/fire");
+
 import CarInsurance from "@/controller/car-insurance";
 import CarInsuranceModel from "@/models/car-insurance";
 

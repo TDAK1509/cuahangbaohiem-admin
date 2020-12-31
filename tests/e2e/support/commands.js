@@ -23,3 +23,19 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("login", () => {
+  cy.fixture("user").then(({ email, password }) => {
+    cy.visit("/login");
+    cy.get("[data-cy=email]").type(email);
+    cy.get("[data-cy=password]").type(password);
+    cy.get("[data-cy=login-button]").click();
+    const homeUrl = Cypress.config().baseUrl + "/";
+    cy.url().should("eq", homeUrl);
+  });
+});
+
+Cypress.Commands.add("logout", () => {
+  indexedDB.deleteDatabase("firebaseLocalStorageDb");
+  localStorage.clear();
+});
