@@ -40,7 +40,12 @@
               Đăng nhập
             </v-btn>
 
-            <v-btn text color="info" @click="onForgotPasswordClick">
+            <v-btn
+              text
+              color="info"
+              class="mt-4"
+              @click="onForgotPasswordClick"
+            >
               Quên mật khẩu?
             </v-btn>
           </v-form>
