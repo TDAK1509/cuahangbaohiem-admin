@@ -3,28 +3,6 @@ describe("Home page", () => {
     cy.login();
   });
 
-  afterEach(() => {
-    cy.logout();
-  });
-
-  describe("Header bar", () => {
-    it("renders logo", () => {
-      cy.get("[data-cy=logo]").should("be.visible");
-    });
-
-    it("clicking logo goes to home page", () => {
-      const homePageUrl = Cypress.config().baseUrl + "/";
-      cy.visit("/bao-hiem/o-to");
-      cy.url().should("not.eq", homePageUrl);
-      cy.get("[data-cy=logo]").click();
-      cy.url().should("eq", homePageUrl);
-    });
-  });
-
-  it("renders text 'Xem khách hàng đăng ký mua bảo hiểm'", () => {
-    cy.contains("Xem khách hàng đăng ký mua bảo hiểm").should("be.visible");
-  });
-
   describe("Side bar", () => {
     function getSideBar() {
       return cy.get("[data-cy=side-bar]");
@@ -88,6 +66,10 @@ describe("Home page", () => {
   });
 
   describe("Content", () => {
+    it("renders text 'Xem khách hàng đăng ký mua bảo hiểm'", () => {
+      cy.contains("Xem khách hàng đăng ký mua bảo hiểm").should("be.visible");
+    });
+
     it("renders button linking to car insurance buying requests", () => {
       const carInsuranceSelector = "[data-cy=car-insurance-request]";
       cy.get(carInsuranceSelector).should("be.visible");

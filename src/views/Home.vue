@@ -14,7 +14,7 @@
 
 <script>
 import SideBar from "@/components/SideBar.vue";
-import HeaderBar from "@/components/HeaderBar.vue";
+import HeaderBar from "@/components/header-bar/HeaderBar.vue";
 import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 
 export default {

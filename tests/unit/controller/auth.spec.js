@@ -57,4 +57,14 @@ describe("AuthController", () => {
       expect(mockLogout).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe("changePassword()", () => {
+    it("calls AuthModel.changePassword with new password", () => {
+      const mockChangePassword = jest.fn();
+      AuthModel.changePassword = mockChangePassword;
+      AuthController.changePassword("new-password");
+      expect(mockChangePassword).toHaveBeenCalledTimes(1);
+      expect(mockChangePassword).toHaveBeenCalledWith("new-password");
+    });
+  });
 });

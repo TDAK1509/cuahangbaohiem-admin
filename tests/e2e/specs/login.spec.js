@@ -11,7 +11,7 @@ describe("Login page", () => {
     });
   });
 
-  afterEach(() => {
+  beforeEach(() => {
     cy.logout();
   });
 
@@ -70,14 +70,6 @@ describe("Login page", () => {
         getLoginButton().click();
         const homeUrl = Cypress.config().baseUrl + "/";
         cy.url().should("eq", homeUrl);
-      });
-    });
-
-    describe("logout", () => {
-      it("clicking logout works and redirects to login page", () => {
-        cy.login();
-        cy.get("[data-cy=logout]").click();
-        cy.url().should("include", "/login");
       });
     });
   });

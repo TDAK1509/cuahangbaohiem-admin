@@ -24,4 +24,8 @@ export default class AuthModel {
       }
     });
   }
+
+  public static changePassword(newPassword: string) {
+    return auth.currentUser!.updatePassword(newPassword);
+  }
 }
