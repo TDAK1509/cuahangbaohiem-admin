@@ -24,14 +24,15 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="close">
-          Không
+          Hủy
         </v-btn>
         <v-btn
           data-cy="change-password-modal-button"
           text
+          color="red"
           @click="changePassword"
         >
-          Có
+          Đổi mật khẩu
         </v-btn>
       </v-card-actions>
     </v-card>
