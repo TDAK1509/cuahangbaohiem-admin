@@ -54,10 +54,14 @@ export default class ChangePasswordModal extends Vue {
       return;
     }
 
-    AuthController.changePassword(this.newPassword).then(() => {
-      this.errorMessage = "";
-      this.close();
-    });
+    AuthController.changePassword(this.newPassword)
+      .then(() => {
+        this.errorMessage = "";
+        this.close();
+      })
+      .catch(e => {
+        this.errorMessage = e.message;
+      });
   }
 
   close() {
