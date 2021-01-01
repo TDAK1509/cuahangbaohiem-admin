@@ -18,6 +18,8 @@
           type="password"
           label="Mật khẩu cũ"
         />
+
+        <p v-if="errorMessage" class="red--text">{{ errorMessage }}</p>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -44,9 +46,16 @@ import AuthController from "@/controller/auth";
 export default class ChangePasswordModal extends Vue {
   newPassword = "";
   confirmPassword = "";
+  errorMessage = "";
 
   changePassword() {
+    if (this.newPassword !== this.confirmPassword) {
+      this.errorMessage = "Mật khẩu không khớp nhau";
+      return;
+    }
+
     AuthController.changePassword(this.newPassword).then(() => {
+      this.errorMessage = "";
       this.close();
     });
   }

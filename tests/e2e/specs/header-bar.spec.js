@@ -19,6 +19,14 @@ describe("Header bar", () => {
     openChangePasswordModal();
   });
 
+  it("shows error message if new password != confirm password", () => {
+    openChangePasswordModal();
+    typeNewPassword("new-password");
+    typeConfirmPassword("different-password");
+    clickChangePasswordButtonInModal();
+    cy.contains("Mật khẩu không khớp nhau");
+  });
+
   it("can change password in change password popup", () => {
     const newPassword = "newPassword";
 
@@ -50,12 +58,20 @@ function getChangePasswordModal() {
 
 function changePassword(password) {
   openChangePasswordModal();
-  typeNewPassword(password);
+  typePasswordToChange(password);
   clickChangePasswordButtonInModal();
+}
+
+function typePasswordToChange(password) {
+  typeNewPassword(password);
+  typeConfirmPassword(password);
 }
 
 function typeNewPassword(password) {
   cy.get("[data-cy=new-password]").type(password);
+}
+
+function typeConfirmPassword(password) {
   cy.get("[data-cy=confirm-password]").type(password);
 }
 
