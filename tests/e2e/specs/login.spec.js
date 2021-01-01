@@ -68,7 +68,39 @@ describe("Login page", () => {
             .should("be.visible");
         });
 
-        it("enters wrong email format and click RESET button shows error wrong email format", () => {
+        function clickResetPassword() {
+          getResetPasswordModal()
+            .find("[data-cy=reset-password-button]")
+            .click();
+        }
+
+        it("entering wrong email format and clicking RESET button shows error wrong email format", () => {
+          const SUCCESS_MESSAGE =
+            "Vui lòng kiểm tra email của bạn để lấy lại mật khẩu!";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(SUCCESS_MESSAGE)
+            .should("not.exist");
+
+          getForgotPasswordEmail()
+            .type("test@gmail.com")
+            .click();
+
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(SUCCESS_MESSAGE)
+            .should("be.visible");
+        });
+
+        function getForgotPasswordEmail() {
+          return cy.get("[data-cy=reset-password-email]");
+        }
+
+        it("entering correct emails and clicking RESET button show success message", () => {
           const ERROR_WRONG_EMAIL_FORMAT = "Định dạng email không đúng";
 
           clickForgotPassword();
@@ -87,16 +119,6 @@ describe("Login page", () => {
             .contains(ERROR_WRONG_EMAIL_FORMAT)
             .should("be.visible");
         });
-
-        function clickResetPassword() {
-          getResetPasswordModal()
-            .find("[data-cy=reset-password-button]")
-            .click();
-        }
-
-        function getForgotPasswordEmail() {
-          return cy.get("[data-cy=reset-password-email]");
-        }
       });
     });
 

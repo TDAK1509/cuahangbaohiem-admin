@@ -14,6 +14,9 @@
         />
 
         <p v-if="errorMessage" class="red--text">{{ errorMessage }}</p>
+        <p v-else-if="successMessage" class="success--text">
+          {{ successMessage }}
+        </p>
       </v-card-text>
 
       <v-card-actions>
@@ -38,6 +41,7 @@ import { isEmail } from "@/utils/form-validation";
 export default class ResetPasswordModal extends Vue {
   email = "";
   errorMessage = "";
+  successMessage = "";
 
   close() {
     this.$emit("close");
@@ -53,6 +57,10 @@ export default class ResetPasswordModal extends Vue {
       this.errorMessage = "Định dạng email không đúng";
       return;
     }
+
+    this.errorMessage = "";
+    this.successMessage =
+      "Vui lòng kiểm tra email của bạn để lấy lại mật khẩu!";
   }
 }
 </script>
