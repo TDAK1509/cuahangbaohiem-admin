@@ -68,14 +68,34 @@ describe("Login page", () => {
             .should("be.visible");
         });
 
-        function getForgotPasswordEmail() {
-          return cy.get("[data-cy=reset-password-email]");
-        }
+        it("enters wrong email format and click RESET button shows error wrong email format", () => {
+          const ERROR_WRONG_EMAIL_FORMAT = "Định dạng email không đúng";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(ERROR_WRONG_EMAIL_FORMAT)
+            .should("not.exist");
+
+          getForgotPasswordEmail()
+            .type("wrong-email-format")
+            .click();
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(ERROR_WRONG_EMAIL_FORMAT)
+            .should("be.visible");
+        });
 
         function clickResetPassword() {
           getResetPasswordModal()
             .find("[data-cy=reset-password-button]")
             .click();
+        }
+
+        function getForgotPasswordEmail() {
+          return cy.get("[data-cy=reset-password-email]");
         }
       });
     });

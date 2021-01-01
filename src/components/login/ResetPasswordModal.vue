@@ -8,7 +8,7 @@
       <v-card-text>
         <v-text-field
           v-model="email"
-          data-cy="email"
+          data-cy="reset-password-email"
           label="Email"
           prepend-inner-icon="mdi-email"
         />
@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { isEmail } from "@/utils/form-validation";
 
 @Component
 export default class ResetPasswordModal extends Vue {
@@ -45,6 +46,11 @@ export default class ResetPasswordModal extends Vue {
   onClickReset() {
     if (!this.email) {
       this.errorMessage = "Vui lòng điền email";
+      return;
+    }
+
+    if (!isEmail(this.email)) {
+      this.errorMessage = "Định dạng email không đúng";
       return;
     }
   }
