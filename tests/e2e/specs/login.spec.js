@@ -35,6 +35,10 @@ describe("Login page", () => {
         getPasswordField().should("be.visible");
         getLoginButton().should("be.visible");
       });
+
+      it("has button to reset password", () => {
+        cy.contains("Quên mật khẩu?").should("be.visible");
+      });
     });
 
     describe("form handling", () => {

@@ -39,6 +39,10 @@
             >
               Đăng nhập
             </v-btn>
+
+            <v-btn text color="info" @click="onForgotPasswordClick">
+              Quên mật khẩu?
+            </v-btn>
           </v-form>
         </div>
       </v-container>
@@ -86,6 +90,10 @@ export default class Login extends Vue {
 
   validateForm() {
     (this.$refs.form as HTMLFormElement).validate();
+  }
+
+  onForgotPasswordClick() {
+    //
   }
 }
 </script>
