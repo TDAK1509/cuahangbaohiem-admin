@@ -9,6 +9,12 @@
     <v-spacer></v-spacer>
 
     <v-btn data-cy="logout" @click="logout">Logout</v-btn>
+
+    <AccountButton @click-change-password="showChangePasswordModal = true" />
+
+    <div v-if="showChangePasswordModal" data-cy="change-password-modal">
+      modal
+    </div>
   </v-app-bar>
 </template>
 
@@ -16,9 +22,16 @@
 import { Component, Vue } from "vue-property-decorator";
 import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 import AuthController from "@/controller/auth";
+import AccountButton from "@/components/AccountButton.vue";
 
-@Component
+@Component({
+  components: {
+    AccountButton
+  }
+})
 export default class HeaderBar extends Vue {
+  showChangePasswordModal = false;
+
   get isMobile(): boolean {
     return window.innerWidth <= MOBILE_BREAKPOINT;
   }
