@@ -53,4 +53,8 @@ export default class AuthController {
   public static changePassword(newPassword: string) {
     return AuthModel.changePassword(newPassword);
   }
+
+  public static sendPasswordResetEmail(email: string) {
+    return AuthModel.sendPasswordResetEmail(email);
+  }
 }
