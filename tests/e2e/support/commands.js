@@ -40,3 +40,13 @@ Cypress.Commands.add("logout", () => {
   indexedDB.deleteDatabase("firebaseLocalStorageDb");
   localStorage.clear();
 });
+
+Cypress.Commands.add("loginWithEmailPassword", (email, password) => {
+  cy.logout();
+  cy.visit("/login");
+  cy.get("[data-cy=email]").type(email);
+  cy.get("[data-cy=password]").type(password);
+  cy.get("[data-cy=login-button]").click();
+  const homeUrl = Cypress.config().baseUrl + "/";
+  cy.url().should("eq", homeUrl);
+});

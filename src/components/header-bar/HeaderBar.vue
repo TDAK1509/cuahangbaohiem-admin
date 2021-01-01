@@ -12,9 +12,10 @@
 
     <AccountButton @click-change-password="showChangePasswordModal = true" />
 
-    <div v-if="showChangePasswordModal" data-cy="change-password-modal">
-      modal
-    </div>
+    <ChangePasswordModal
+      v-if="showChangePasswordModal"
+      @close="closeChangePasswordModal"
+    />
   </v-app-bar>
 </template>
 
@@ -22,11 +23,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
 import AuthController from "@/controller/auth";
-import AccountButton from "@/components/AccountButton.vue";
+import AccountButton from "./AccountButton.vue";
+import ChangePasswordModal from "./ChangePasswordModal.vue";
 
 @Component({
   components: {
-    AccountButton
+    AccountButton,
+    ChangePasswordModal
   }
 })
 export default class HeaderBar extends Vue {
@@ -42,6 +45,10 @@ export default class HeaderBar extends Vue {
 
   logout() {
     AuthController.logout();
+  }
+
+  closeChangePasswordModal() {
+    this.showChangePasswordModal = false;
   }
 }
 </script>

@@ -49,4 +49,8 @@ export default class AuthController {
   public static logout() {
     return AuthModel.logout();
   }
+
+  public static changePassword(newPassword: string) {
+    return AuthModel.changePassword(newPassword);
+  }
 }
