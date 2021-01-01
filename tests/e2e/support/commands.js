@@ -26,6 +26,7 @@
 
 Cypress.Commands.add("login", () => {
   cy.fixture("user").then(({ email, password }) => {
+    cy.logout();
     cy.visit("/login");
     cy.get("[data-cy=email]").type(email);
     cy.get("[data-cy=password]").type(password);
