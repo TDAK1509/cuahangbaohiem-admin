@@ -63,6 +63,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import AuthController from "@/controller/auth";
+import { isEmail } from "@/utils/form-validation";
 import ResetPasswordModal from "@/components/login/ResetPasswordModal.vue";
 
 @Component({
@@ -81,7 +82,7 @@ export default class Login extends Vue {
   rules = {
     email: [
       (v: string) => !!v || "Vui lòng điền email",
-      (v: string) => /.+@.+/.test(v) || "Định dạng email không chính xác"
+      (v: string) => isEmail(v) || "Định dạng email không chính xác"
     ],
     password: [(v: string) => !!v || "Vui lòng điền mật khẩu"]
   };

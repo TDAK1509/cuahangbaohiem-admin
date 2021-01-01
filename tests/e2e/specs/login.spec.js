@@ -129,7 +129,7 @@ describe("Login page", () => {
         cy.contains("Vui lòng điền mật khẩu").should("be.visible");
       });
 
-      it("enter wrongs email shows correct error message", () => {
+      it("enter wrongs email format shows correct error message", () => {
         getEmailField().type("wrong-email-format");
         getLoginButton().click();
         cy.contains("Định dạng email không chính xác").should("be.visible");
