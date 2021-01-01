@@ -44,13 +44,17 @@
               text
               color="info"
               class="mt-4"
-              @click="onForgotPasswordClick"
+              @click="showForgotPasswordModal = true"
             >
               Quên mật khẩu?
             </v-btn>
           </v-form>
         </div>
       </v-container>
+
+      <div v-if="showForgotPasswordModal" data-cy="forgot-password-modal">
+        Modal
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -66,6 +70,7 @@ export default class Login extends Vue {
   password = "";
   errorMessage = "";
   isLoggingIn = false;
+  showForgotPasswordModal = false;
 
   rules = {
     email: [

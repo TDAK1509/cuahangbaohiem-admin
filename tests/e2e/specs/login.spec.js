@@ -36,9 +36,15 @@ describe("Login page", () => {
         getLoginButton().should("be.visible");
       });
 
-      it("has button to reset password", () => {
-        cy.contains("Quên mật khẩu?").should("be.visible");
+      it("clicking forgot password open popup", () => {
+        getForgotPasswordModal().should("not.exist");
+        cy.contains("Quên mật khẩu?").click();
+        getForgotPasswordModal().should("be.visible");
       });
+
+      function getForgotPasswordModal() {
+        return cy.get("[data-cy=forgot-password-modal]");
+      }
     });
 
     describe("form handling", () => {
