@@ -4,6 +4,7 @@
       <v-card-title class="headline">
         Đổi mật khẩu
       </v-card-title>
+
       <v-card-text>
         <v-text-field
           v-model="newPassword"
@@ -21,11 +22,14 @@
 
         <p v-if="errorMessage" class="red--text">{{ errorMessage }}</p>
       </v-card-text>
+
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn text @click="close">
           Hủy
         </v-btn>
+
+        <v-spacer></v-spacer>
+
         <v-btn
           data-cy="change-password-modal-button"
           text
