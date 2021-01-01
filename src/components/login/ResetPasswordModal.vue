@@ -36,6 +36,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { isEmail } from "@/utils/form-validation";
+import AuthController from "@/controller/auth";
 
 @Component
 export default class ResetPasswordModal extends Vue {
@@ -58,9 +59,15 @@ export default class ResetPasswordModal extends Vue {
       return;
     }
 
-    this.errorMessage = "";
-    this.successMessage =
-      "Vui lòng kiểm tra email của bạn để lấy lại mật khẩu!";
+    AuthController.sendPasswordResetEmail(this.email)
+      .then(() => {
+        this.errorMessage = "";
+        this.successMessage =
+          "Vui lòng kiểm tra email của bạn để lấy lại mật khẩu!";
+      })
+      .catch(e => {
+        this.errorMessage = e.message;
+      });
   }
 }
 </script>
