@@ -37,14 +37,47 @@ describe("Login page", () => {
       });
 
       it("clicking forgot password open popup", () => {
-        getForgotPasswordModal().should("not.exist");
-        cy.contains("Quên mật khẩu?").click();
-        getForgotPasswordModal().should("be.visible");
+        getResetPasswordModal().should("not.exist");
+        clickForgotPassword();
+        getResetPasswordModal().should("be.visible");
       });
 
-      function getForgotPasswordModal() {
-        return cy.get("[data-cy=forgot-password-modal]");
+      function getResetPasswordModal() {
+        return cy.get("[data-cy=reset-password-modal]");
       }
+
+      function clickForgotPassword() {
+        cy.contains("Quên mật khẩu?").click();
+      }
+
+      describe("forgot password modal", () => {
+        it("clicking RESET button shows error empty email", () => {
+          const ERROR_EMPTY_EMAIL = "Vui lòng điền email";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(ERROR_EMPTY_EMAIL)
+            .should("not.exist");
+
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(ERROR_EMPTY_EMAIL)
+            .should("be.visible");
+        });
+
+        function getForgotPasswordEmail() {
+          return cy.get("[data-cy=reset-password-email]");
+        }
+
+        function clickResetPassword() {
+          getResetPasswordModal()
+            .find("[data-cy=reset-password-button]")
+            .click();
+        }
+      });
     });
 
     describe("form handling", () => {

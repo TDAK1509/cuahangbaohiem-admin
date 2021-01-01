@@ -44,7 +44,7 @@
               text
               color="info"
               class="mt-4"
-              @click="showForgotPasswordModal = true"
+              @click="showResetPasswordModal = true"
             >
               Quên mật khẩu?
             </v-btn>
@@ -52,9 +52,10 @@
         </div>
       </v-container>
 
-      <div v-if="showForgotPasswordModal" data-cy="forgot-password-modal">
-        Modal
-      </div>
+      <ResetPasswordModal
+        v-if="showResetPasswordModal"
+        @close="showResetPasswordModal = false"
+      />
     </v-main>
   </v-app>
 </template>
@@ -62,15 +63,20 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import AuthController from "@/controller/auth";
+import ResetPasswordModal from "@/components/login/ResetPasswordModal.vue";
 
-@Component
+@Component({
+  components: {
+    ResetPasswordModal
+  }
+})
 export default class Login extends Vue {
   isFormValid = false;
   email = "";
   password = "";
   errorMessage = "";
   isLoggingIn = false;
-  showForgotPasswordModal = false;
+  showResetPasswordModal = false;
 
   rules = {
     email: [
