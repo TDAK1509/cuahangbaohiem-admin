@@ -8,8 +8,6 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn data-cy="logout" @click="logout">Logout</v-btn>
-
     <AccountButton @click-change-password="showChangePasswordModal = true" />
 
     <ChangePasswordModal
@@ -22,7 +20,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { MOBILE_BREAKPOINT } from "@/utils/breakpoint";
-import AuthController from "@/controller/auth";
 import AccountButton from "./AccountButton.vue";
 import ChangePasswordModal from "./ChangePasswordModal.vue";
 
@@ -41,10 +38,6 @@ export default class HeaderBar extends Vue {
 
   onLogoClick() {
     this.$emit("click-logo");
-  }
-
-  logout() {
-    AuthController.logout();
   }
 
   closeChangePasswordModal() {

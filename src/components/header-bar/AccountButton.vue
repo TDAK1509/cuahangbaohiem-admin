@@ -7,14 +7,16 @@
     </template>
     <v-list>
       <v-list-item
-        data-cy="change-password-button"
-        @click="$emit('click-change-password')"
+        v-for="(item, index) in items"
+        :key="index"
+        :data-cy="item.dataCy"
+        @click="item.clickHandler"
       >
         <v-list-item-icon>
-          <v-icon>mdi-magnify</v-icon>
+          <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Đổi mật khẩu</v-list-item-title>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -22,7 +24,34 @@
 </template>
 
 <script>
+import AuthController from "@/controller/auth";
+
 export default {
-  name: "AccountButton"
+  name: "AccountButton",
+
+  data() {
+    return {
+      items: [
+        {
+          dataCy: "change-password-button",
+          icon: "mdi-key",
+          text: "Đổi mật khẩu",
+          clickHandler: () => this.$emit("click-change-password")
+        },
+        {
+          dataCy: "logout",
+          icon: "mdi-logout",
+          text: "Đăng xuất",
+          clickHandler: () => this.logout()
+        }
+      ]
+    };
+  },
+
+  methods: {
+    logout() {
+      AuthController.logout();
+    }
+  }
 };
 </script>

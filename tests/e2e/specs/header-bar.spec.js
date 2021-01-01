@@ -43,13 +43,26 @@ describe("Header bar", () => {
       getChangePasswordModal().should("not.exist");
     });
   });
+
+  it("clicking logout works and redirects to login page", () => {
+    cy.get("[data-cy=logout]").should("not.exist");
+    clickAccountButton();
+    cy.get("[data-cy=logout]")
+      .should("be.visible")
+      .click();
+    cy.url().should("include", "/login");
+  });
 });
 
 function openChangePasswordModal() {
   getChangePasswordModal().should("not.exist");
-  cy.get("[data-cy=account-button]").click();
+  clickAccountButton();
   cy.get("[data-cy=change-password-button]").click();
   getChangePasswordModal().should("be.visible");
+}
+
+function clickAccountButton() {
+  cy.get("[data-cy=account-button]").click();
 }
 
 function getChangePasswordModal() {

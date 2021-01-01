@@ -72,14 +72,6 @@ describe("Login page", () => {
         cy.url().should("eq", homeUrl);
       });
     });
-
-    describe("logout", () => {
-      it("clicking logout works and redirects to login page", () => {
-        cy.login();
-        cy.get("[data-cy=logout]").click();
-        cy.url().should("include", "/login");
-      });
-    });
   });
 });
 
