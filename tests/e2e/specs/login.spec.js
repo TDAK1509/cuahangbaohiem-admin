@@ -35,6 +35,91 @@ describe("Login page", () => {
         getPasswordField().should("be.visible");
         getLoginButton().should("be.visible");
       });
+
+      it("clicking forgot password open popup", () => {
+        getResetPasswordModal().should("not.exist");
+        clickForgotPassword();
+        getResetPasswordModal().should("be.visible");
+      });
+
+      function getResetPasswordModal() {
+        return cy.get("[data-cy=reset-password-modal]");
+      }
+
+      function clickForgotPassword() {
+        cy.contains("Quên mật khẩu?").click();
+      }
+
+      describe("forgot password modal", () => {
+        it("clicking RESET button shows error empty email", () => {
+          const ERROR_EMPTY_EMAIL = "Vui lòng điền email";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(ERROR_EMPTY_EMAIL)
+            .should("not.exist");
+
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(ERROR_EMPTY_EMAIL)
+            .should("be.visible");
+        });
+
+        function clickResetPassword() {
+          getResetPasswordModal()
+            .find("[data-cy=reset-password-button]")
+            .click();
+        }
+
+        it("entering wrong email format and clicking RESET button shows error wrong email format", () => {
+          const SUCCESS_MESSAGE =
+            "Vui lòng kiểm tra email của bạn để lấy lại mật khẩu!";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(SUCCESS_MESSAGE)
+            .should("not.exist");
+
+          getForgotPasswordEmail()
+            .type("test@gmail.com")
+            .click();
+
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(SUCCESS_MESSAGE)
+            .should("be.visible");
+        });
+
+        function getForgotPasswordEmail() {
+          return cy.get("[data-cy=reset-password-email]");
+        }
+
+        it("entering correct emails and clicking RESET button show success message", () => {
+          const ERROR_WRONG_EMAIL_FORMAT = "Định dạng email không đúng";
+
+          clickForgotPassword();
+          getResetPasswordModal().should("be.visible");
+
+          getResetPasswordModal()
+            .contains(ERROR_WRONG_EMAIL_FORMAT)
+            .should("not.exist");
+
+          getForgotPasswordEmail()
+            .type("wrong-email-format")
+            .click();
+          clickResetPassword();
+
+          getResetPasswordModal()
+            .contains(ERROR_WRONG_EMAIL_FORMAT)
+            .should("be.visible");
+        });
+      });
     });
 
     describe("form handling", () => {
@@ -44,7 +129,7 @@ describe("Login page", () => {
         cy.contains("Vui lòng điền mật khẩu").should("be.visible");
       });
 
-      it("enter wrongs email shows correct error message", () => {
+      it("enter wrongs email format shows correct error message", () => {
         getEmailField().type("wrong-email-format");
         getLoginButton().click();
         cy.contains("Định dạng email không chính xác").should("be.visible");

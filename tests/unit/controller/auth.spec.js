@@ -67,4 +67,14 @@ describe("AuthController", () => {
       expect(mockChangePassword).toHaveBeenCalledWith("new-password");
     });
   });
+
+  describe("sendPasswordResetEmail()", () => {
+    it("calls AuthModel.sendPasswordResetEmail with new password", () => {
+      const mockSendPasswordResetEmail = jest.fn();
+      AuthModel.sendPasswordResetEmail = mockSendPasswordResetEmail;
+      AuthController.sendPasswordResetEmail("email");
+      expect(mockSendPasswordResetEmail).toHaveBeenCalledTimes(1);
+      expect(mockSendPasswordResetEmail).toHaveBeenCalledWith("email");
+    });
+  });
 });

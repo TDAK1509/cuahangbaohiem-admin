@@ -39,9 +39,23 @@
             >
               Đăng nhập
             </v-btn>
+
+            <v-btn
+              text
+              color="info"
+              class="mt-4"
+              @click="showResetPasswordModal = true"
+            >
+              Quên mật khẩu?
+            </v-btn>
           </v-form>
         </div>
       </v-container>
+
+      <ResetPasswordModal
+        v-if="showResetPasswordModal"
+        @close="showResetPasswordModal = false"
+      />
     </v-main>
   </v-app>
 </template>
@@ -49,19 +63,26 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import AuthController from "@/controller/auth";
+import { isEmail } from "@/utils/form-validation";
+import ResetPasswordModal from "@/components/login/ResetPasswordModal.vue";
 
-@Component
+@Component({
+  components: {
+    ResetPasswordModal
+  }
+})
 export default class Login extends Vue {
   isFormValid = false;
   email = "";
   password = "";
   errorMessage = "";
   isLoggingIn = false;
+  showResetPasswordModal = false;
 
   rules = {
     email: [
       (v: string) => !!v || "Vui lòng điền email",
-      (v: string) => /.+@.+/.test(v) || "Định dạng email không chính xác"
+      (v: string) => isEmail(v) || "Định dạng email không chính xác"
     ],
     password: [(v: string) => !!v || "Vui lòng điền mật khẩu"]
   };
@@ -86,6 +107,10 @@ export default class Login extends Vue {
 
   validateForm() {
     (this.$refs.form as HTMLFormElement).validate();
+  }
+
+  onForgotPasswordClick() {
+    //
   }
 }
 </script>
