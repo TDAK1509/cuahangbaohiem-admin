@@ -66,4 +66,6 @@ jobs:
           key: firebase-emulator-v1
 
       - name: Run E2E with cypress
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
         run: yarn e2e:onetime
